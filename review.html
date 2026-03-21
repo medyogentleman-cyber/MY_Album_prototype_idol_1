@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>コンテンツレビュー - MYアルバム アーティスト</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .official-btn-container { margin-top: 10px; padding-top: 10px; border-top: 1px dashed rgba(0,0,0,0.05); display: none; }
+        .official-btn-container.active { display: block; }
+        .btn-official { 
+            width: 100%; 
+            padding: 8px; 
+            border-radius: 12px; 
+            background: linear-gradient(135deg, var(--success), #28a745); 
+            color: white; 
+            font-size: 11px; 
+            font-weight: 900; 
+            border: none; 
+            box-shadow: 0 4px 12px rgba(40, 167, 69, 0.2);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-official:active { transform: scale(0.98); opacity: 0.9; }
+        .btn-official.posted { background: #E5E7EB; color: #9CA3AF; box-shadow: none; cursor: default; }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 4px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <header class="app-header">
+            <button class="btn-ghost" onclick="history.back()" style="font-size: 20px;">←</button>
+            <h1 class="header-title">コンテンツレビュー</h1>
+            <div style="width: 32px;"></div>
+        </header>
+
+        <main class="p-4 anim-fade" style="padding-bottom: 110px;">
+            <div class="tab-container">
+                <div class="tab-item active" onclick="switchTab('edit-review', this)">編集レビュー</div>
+                <div class="tab-item" onclick="switchTab('fan-original', this)">ファン独自</div>
+            </div>
+
+            <!-- Tab 1: 編集レビュー -->
+            <div id="edit-review" class="tab-content active">
+                <p class="text-xs text-sub mb-4">キュレーターによる編集作品を確認・認定します。</p>
+                
+                <!-- Archive List Item 1 -->
+                <div class="archive-card-sm" id="edit-1">
+                    <div class="flex gap-3">
+                        <img src="images/aoi_thumbnails/aoi_summer_fest_yukata.png" class="ac-thumb-sm" onclick="openReviewDetail('edit-1', 'edit', 'たかひろ', 'aoi_summer_fest_yukata', 'unconfirmed')">
+                        <div style="flex:1;">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <div class="text-xs font-black">夏祭りオフショット 編集1</div>
+                                    <div class="text-xs text-sub">by <b>たかひろ</b></div>
+                                </div>
+                                <select class="status-select status-unconfirmed" onchange="handleStatusChange(this, 'edit-1')">
+                                    <option value="unconfirmed" selected>未確認</option>
+                                    <option value="god">神認定</option>
+                                    <option value="rejected">却下</option>
+                                </select>
+                            </div>
+                            <div class="text-xs text-sub mt-2">2026/03/21 12:45</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Archive List Item 2 -->
+                <div class="archive-card-sm" id="edit-2">
+                    <div class="flex gap-3">
+                        <img src="images/aoi_thumbnails/aoi_summer_fest_yukata.png" class="ac-thumb-sm" onclick="openReviewDetail('edit-2', 'edit', 'みさき', 'aoi_summer_fest_yukata', 'god')">
+                        <div style="flex:1;">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <div class="text-xs font-black">夏祭りオフショット 編集2</div>
+                                    <div class="text-xs text-sub">by <b>みさき</b></div>
+                                </div>
+                                <select class="status-select status-god" onchange="handleStatusChange(this, 'edit-2')">
+                                    <option value="unconfirmed">未確認</option>
+                                    <option value="god" selected>神認定</option>
+                                    <option value="rejected">却下</option>
+                                </select>
+                            </div>
+                            <div class="text-xs text-sub mt-2">2026/03/21 13:05</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Archive List Item 3 -->
+                <div class="archive-card-sm" id="edit-3">
+                    <div class="flex gap-3">
+                        <img src="images/aoi_thumbnails/aoi_live_rehe_sweat.png" class="ac-thumb-sm" onclick="openReviewDetail('edit-3', 'edit', 'Kuro', 'aoi_live_rehe_sweat', 'rejected')">
+                        <div style="flex:1;">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <div class="text-xs font-black">ライブリハーサル 編集1</div>
+                                    <div class="text-xs text-sub">by <b>Kuro</b></div>
+                                </div>
+                                <select class="status-select status-rejected" onchange="handleStatusChange(this, 'edit-3')">
+                                    <option value="unconfirmed">未確認</option>
+                                    <option value="god">神認定</option>
+                                    <option value="rejected" selected>却下</option>
+                                </select>
+                            </div>
+                            <div class="text-xs text-sub mt-2">2026/03/21 14:20</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 2: ファン独自 -->
+            <div id="fan-original" class="tab-content">
+                <p class="text-xs text-sub mb-4">ファンが独自に撮影・投稿したコンテンツの審査です。</p>
+                
+                <div class="fan-grid">
+                    <!-- Fan Item 1 -->
+                    <div class="archive-card-sm" id="fan-1">
+                        <div class="flex gap-3">
+                            <img src="images/aoi_thumbnails/aoi_street_wave.png" class="ac-thumb-sm" onclick="openReviewDetail('fan-1', 'fan', 'あおいLOVE', 'aoi_street_wave', 'unconfirmed')">
+                            <div style="flex:1;">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <div class="text-xs font-black">出待ちのあおいちゃん</div>
+                                        <div class="text-xs text-sub">by <b>あおいLOVE</b></div>
+                                    </div>
+                                    <select class="status-select status-unconfirmed" onchange="handleStatusChange(this, 'fan-1')">
+                                        <option value="unconfirmed" selected>未確認</option>
+                                        <option value="approved">許可済</option>
+                                        <option value="rejected">却下</option>
+                                    </select>
+                                </div>
+                                <div class="text-xs text-sub mt-2">2026/03/21 15:30</div>
+                                <div class="official-btn-container" id="official-fan-1">
+                                    <button class="btn-official" onclick="postToSharedArchive('fan-1')">公式にする</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Fan Item 2 -->
+                    <div class="archive-card-sm" id="fan-2">
+                        <div class="flex gap-3">
+                            <img src="images/aoi_thumbnails/aoi_cafe_latte_smile.png" class="ac-thumb-sm" onclick="openReviewDetail('fan-2', 'fan', 'Kenji', 'aoi_cafe_latte_smile', 'approved')">
+                            <div style="flex:1;">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <div class="text-xs font-black">カフェでの遭遇写真</div>
+                                        <div class="text-xs text-sub">by <b>Kenji</b></div>
+                                    </div>
+                                    <select class="status-select status-approved" onchange="handleStatusChange(this, 'fan-2')">
+                                        <option value="unconfirmed">未確認</option>
+                                        <option value="approved" selected>許可済</option>
+                                        <option value="rejected">却下</option>
+                                    </select>
+                                </div>
+                                <div class="text-xs text-sub mt-2">2026/03/21 16:12</div>
+                                <div class="official-btn-container active" id="official-fan-2">
+                                    <button class="btn-official" onclick="postToSharedArchive('fan-2')">公式にする</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Fan Item 3 (New) -->
+                    <div class="archive-card-sm" id="fan-3">
+                        <div class="flex gap-3">
+                            <img src="images/aoi_thumbnails/aoi_live_miracle_action.png" class="ac-thumb-sm" onclick="openReviewDetail('fan-3', 'fan', 'Sho', 'aoi_live_miracle_action', 'rejected')">
+                            <div style="flex:1;">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <div class="text-xs font-black">ライブ中の奇跡の一枚</div>
+                                        <div class="text-xs text-sub">by <b>Sho</b></div>
+                                    </div>
+                                    <select class="status-select status-rejected" onchange="handleStatusChange(this, 'fan-3')">
+                                        <option value="unconfirmed">未確認</option>
+                                        <option value="approved">許可済</option>
+                                        <option value="rejected" selected>却下</option>
+                                    </select>
+                                </div>
+                                <div class="text-xs text-sub mt-2">2026/03/21 17:05</div>
+                                <div class="official-btn-container" id="official-fan-3">
+                                    <button class="btn-official" onclick="postToSharedArchive('fan-3')">公式にする</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Review Detail Modal -->
+        <div id="reviewModal" class="modal-overlay">
+            <div class="modal-container">
+                <div class="modal-img-wrap">
+                    <img src="" class="modal-img" alt="Review Content">
+                </div>
+                <div class="modal-content">
+                    <div class="flex justify-between items-center mb-6">
+                        <div>
+                            <div class="text-xs text-sub">キュレーター / 投稿者</div>
+                            <div class="modal-curator-name font-black">---</div>
+                        </div>
+                        <span class="modal-status-badge badge badge-unconfirmed">未確認</span>
+                    </div>
+                    
+                    <div class="modal-actions flex gap-4">
+                        <!-- ボタンはJSで動的に生成 -->
+                    </div>
+                    <button class="btn btn-ghost mt-6 text-xs" onclick="closeModal()">閉じる</button>
+                </div>
+            </div>
+        </div>
+
+        <nav class="bottom-nav">
+            <a href="dashboard.html" class="nav-item">
+                <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                <span>ホーム</span>
+            </a>
+            <a href="album_edit.html" class="nav-item">
+                <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                <span>MY投稿</span>
+            </a>
+            <a href="review.html" class="nav-item active">
+                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                <span>レビュー</span>
+            </a>
+            <a href="invite.html" class="nav-item">
+                <svg viewBox="0 0 24 24"><path d="M15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-9-2V7H4v3H1v2h3v3h2v-3h3v-2H6zm9 4c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                <span>招待</span>
+            </a>
+            <a href="mypage.html" class="nav-item">
+                <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                <span>マイページ</span>
+            </a>
+        </nav>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

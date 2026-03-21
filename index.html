@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ログイン & 初期登録 - MYアルバム アーティスト</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .login-hero { text-align: center; margin-bottom: 40px; padding-top: 20px; }
+        .invite-notice {
+            background: #FFF8F2; border: 1px solid #FFE0C2; border-radius: 12px;
+            padding: 16px; margin-bottom: 32px; text-align: center;
+        }
+        .artist-name { color: var(--primary-color); font-size: 20px; font-weight: 900; }
+        .invite-period { font-size: 11px; color: #CC5500; font-weight: 700; margin-top: 4px; }
+        
+        .onboarding-container { background: white; border-radius: 24px; padding: 32px 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
+        .step-indicator { display: flex; gap: 8px; margin-bottom: 24px; justify-content: center; }
+        .step-dot { width: 8px; height: 8px; border-radius: 50%; background: #E5E5EA; transition: 0.3s; }
+        .step-dot.active { background: var(--primary-color); width: 24px; border-radius: 4px; }
+        
+        .optional-tag { font-size: 10px; font-weight: 800; color: #8E8E93; background: #F2F2F7; padding: 2px 6px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
+        .required-tag { font-size: 10px; font-weight: 800; color: #FFF; background: var(--danger); padding: 2px 6px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Step 0: Login Choice -->
+        <div id="step-login" class="onboarding-step active p-6">
+            <div class="login-hero">
+                <div class="logo-text" style="font-size: 32px;">MY<span class="logo-accent">アルバム</span></div>
+                <div class="text-xs font-black" style="color:var(--primary-color); letter-spacing: 2px; margin-top: 4px;">FOR ARTISTS</div>
+            </div>
+
+            <div class="invite-notice anim-fade">
+                <p class="text-xs" style="color:var(--text-sub); margin-bottom: 8px;">招待されたアーティスト</p>
+                <p class="artist-name">蒼くみ <span style="font-size:14px; color:var(--text-main);">様</span></p>
+                <p class="invite-period">有効期限: 発行日から90日以内 (2026/06/19まで)</p>
+            </div>
+
+            <div class="onboarding-container anim-fade" style="animation-delay: 0.1s;">
+                <h3 class="mb-6 text-center">ログイン / 新規登録</h3>
+                <button class="btn btn-outline mb-4" onclick="document.getElementById('step-login').classList.remove('active'); document.getElementById('step-1').classList.add('active');">
+                    <img src="images/icon/Google.png" alt="Google">
+                    Googleでログイン
+                </button>
+                <button class="btn mb-4" style="background: #0866FF; color: white;" onclick="document.getElementById('step-login').classList.remove('active'); document.getElementById('step-1').classList.add('active');">
+                    <img src="images/icon/Facebook.png" alt="Meta">
+                    Meta (Facebook) でログイン
+                </button>
+                <button class="btn" style="background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: white;" onclick="document.getElementById('step-login').classList.remove('active'); document.getElementById('step-1').classList.add('active');">
+                    <img src="images/icon/Instagram.png" alt="Instagram">
+                    Meta (Instagram) でログイン
+                </button>
+            </div>
+        </div>
+
+        <!-- Step 1: Basic Info -->
+        <div id="step-1" class="onboarding-step p-6">
+            <div class="step-indicator"><div class="step-dot active"></div><div class="step-dot"></div><div class="step-dot"></div><div class="step-dot"></div></div>
+            <h2 class="mb-2">基本情報の登録</h2>
+            <p class="text-sub mb-6">アーティスト活動に使用する情報を入力してください。</p>
+
+            <div class="input-group mb-4">
+                <label class="label">氏名 <span class="required-tag">必須</span></label>
+                <input type="text" class="input" placeholder="例：蒼 くみ">
+            </div>
+            <div class="input-group mb-4">
+                <label class="label">電話番号 <span class="required-tag">必須</span></label>
+                <input type="tel" class="input" placeholder="例：090-0000-0000">
+            </div>
+            <div class="input-group mb-4">
+                <label class="label">Email <span class="required-tag">必須</span></label>
+                <input type="email" class="input" placeholder="example@office.com">
+            </div>
+            <div class="input-group mb-12">
+                <label class="label">住所 <span class="required-tag">必須</span></label>
+                <input type="text" class="input" placeholder="例：東京都渋谷区...">
+            </div>
+
+            <button class="btn btn-primary btn-next" data-next="step-2">次へ進む</button>
+        </div>
+
+        <!-- Step 2: Album Setting (Optional) -->
+        <div id="step-2" class="onboarding-step p-6">
+            <div class="step-indicator"><div class="step-dot active"></div><div class="step-dot active"></div><div class="step-dot"></div><div class="step-dot"></div></div>
+            <h2 class="mb-2">アルバムの設定</h2>
+            <p class="text-sub mb-6">ファンが目にするアルバムの名前を設定します。</p>
+
+            <div class="input-group mb-12">
+                <label class="label">MYアルバム名 <span class="optional-tag">任意</span></label>
+                <input type="text" class="input" placeholder="例：蒼くみ推し活HUB" value="蒼くみ Official HUB">
+                <p class="text-xs text-sub mt-2">※後からマイページで変更可能です。</p>
+            </div>
+
+            <div class="flex gap-4">
+                <button class="btn btn-outline btn-back" data-prev="step-1">戻る</button>
+                <button class="btn btn-primary btn-next" data-next="step-3">次へ進む</button>
+            </div>
+        </div>
+
+        <!-- Step 3: Icon Upload (Optional) -->
+        <div id="step-3" class="onboarding-step p-6">
+            <div class="step-indicator"><div class="step-dot active"></div><div class="step-dot active"></div><div class="step-dot active"></div><div class="step-dot"></div></div>
+            <h2 class="mb-2">アイコン画像の登録</h2>
+            <p class="text-sub mb-6">キュレーターアプリで表示されるアイコンです。</p>
+
+            <div class="flex flex-col items-center gap-6 mb-10">
+                <div style="position: relative;">
+                    <img id="preview-icon" src="https://api.dicebear.com/7.x/avataaars/svg?seed=Aoi" class="avatar-lg" style="width: 120px; height: 120px;">
+                    <button class="btn-ghost" style="position: absolute; bottom: 0; right: 0; background: var(--primary-color); color: white; border-radius: 50%; width: 36px; height: 36px; padding: 0;" onclick="document.getElementById('icon-file').click()">📸</button>
+                </div>
+                <input type="file" id="icon-file" style="display:none;" onchange="previewImage(this, 'preview-icon')">
+                <p class="text-xs text-sub">推奨サイズ: 500x500px 以上</p>
+            </div>
+
+            <div style="height: 20px;"></div>
+
+            <div class="flex gap-4">
+                <button class="btn btn-outline btn-back" data-prev="step-2">戻る</button>
+                <button class="btn btn-primary btn-next" data-next="step-4">次へ進む</button>
+            </div>
+        </div>
+
+        <!-- Step 4: Manager Info (Optional) -->
+        <div id="step-4" class="onboarding-step p-6">
+            <div class="step-indicator"><div class="step-dot active"></div><div class="step-dot active"></div><div class="step-dot active"></div><div class="step-dot active"></div></div>
+            <h2 class="mb-2">事務所・マネージャー連絡先</h2>
+            <p class="text-sub mb-6">運営からのお知らせを送付する連絡先を登録できます。</p>
+
+            <div class="input-group mb-4">
+                <label class="label">事務所名 <span class="optional-tag">任意</span></label>
+                <input type="text" class="input" placeholder="例：〇〇エンターテインメント">
+            </div>
+            <div class="input-group mb-4">
+                <label class="label">担当マネージャー名 <span class="optional-tag">任意</span></label>
+                <input type="text" class="input" placeholder="例：佐藤 太郎">
+            </div>
+            <div class="input-group mb-4">
+                <label class="label">担当者電話番号 <span class="optional-tag">任意</span></label>
+                <input type="tel" class="input" placeholder="例：03-XXXX-XXXX">
+            </div>
+            <div class="input-group mb-12">
+                <label class="label">担当者メールアドレス <span class="optional-tag">任意</span></label>
+                <input type="email" class="input" placeholder="example@office.com">
+            </div>
+
+            <div class="flex gap-4">
+                <button class="btn btn-outline btn-back" data-prev="step-3">戻る</button>
+                <button class="btn btn-primary" onclick="completeOnboarding()">登録を完了する</button>
+            </div>
+        </div>
+
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
