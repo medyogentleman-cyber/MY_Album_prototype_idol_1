@@ -6,10 +6,13 @@
     <title>ダッシュボード - MYアルバム アーティスト</title>
     <link rel="stylesheet" href="styles.css">
     <style>
-        .stats-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 4px 0 16px; }
-        .stat-btn { background: white; border-radius: 16px; padding: 16px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
-        .stat-v { font-size: 20px; font-weight: 900; color: var(--primary-color); display: block; }
-        .stat-l { font-size: 10px; color: var(--text-sub); font-weight: 800; margin-top: 4px; }
+        .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 4px 0 16px; }
+        .stat-btn { background: linear-gradient(145deg, #ffffff, #fcfcfc); border: 1px solid rgba(0,0,0,0.02); border-radius: 16px; padding: 14px 4px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.03); transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: flex; flex-direction: column; justify-content: center; }
+        .stat-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.06); border-color: var(--primary-light); }
+        .stat-v { font-size: 17px; font-weight: 950; color: var(--primary-color); display: block; letter-spacing: -0.01em; }
+        .stat-v.money { color: #FF3366; font-size: 15px; }
+        .stat-v.heart { color: #FF6B81; }
+        .stat-l { font-size: 9.5px; color: var(--text-sub); font-weight: 800; margin-top: 6px; letter-spacing: -0.02em; }
         
         .sns-grid { display: flex; flex-direction: column; gap: 10px; }
         .sns-item { display: flex; align-items: center; justify-content: space-between; padding: 12px; border-radius: 12px; background: white; border: 1px solid rgba(0,0,0,0.03); }
@@ -26,42 +29,54 @@
         .fan-date { font-size: 11px; color: var(--text-sub); font-weight: 700; opacity: 0.8; }
         .fan-arrow { color: var(--primary-light); opacity: 0.5; font-size: 18px; font-weight: 900; }
 
-        /* Profile Modal Styles - Enhanced Glassmorphism */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); backdrop-filter: blur(12px); z-index: 1000; visibility: hidden; opacity: 0; transition: 0.4s ease; }
+        /* Full Page Profile Modal Styles */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; visibility: hidden; opacity: 0; transition: 0.3s ease; display: block !important; }
         .modal-overlay.active { visibility: visible; opacity: 1; }
-        .modal-sheet { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%) translateY(100%); width: 100%; max-width: 430px; height: 92vh; background: rgba(248, 249, 251, 0.9); backdrop-filter: blur(20px); border-top-left-radius: 40px; border-top-right-radius: 40px; z-index: 1001; transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1); overflow-y: auto; padding-bottom: 60px; box-shadow: 0 -10px 40px rgba(0,0,0,0.1); border-top: 1px solid rgba(255,255,255,0.4); }
+        .modal-sheet { position: fixed; top: 0; left: 50%; transform: translateX(-50%) translateY(100vh); width: 100%; max-width: 430px; height: 100vh; background: var(--bg-color, #F4F5F7); z-index: 1001; transition: 0.4s cubic-bezier(0.19, 1, 0.22, 1); overflow-y: auto; display: flex; flex-direction: column; }
         .modal-overlay.active .modal-sheet { transform: translateX(-50%) translateY(0); }
-        .modal-header { position: sticky; top: 0; background: transparent; padding: 20px; display: flex; justify-content: flex-end; z-index: 10; }
-        .close-btn { background: rgba(0,0,0,0.05); border: none; width: 36px; height: 36px; border-radius: 50%; font-size: 20px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; }
-        .close-btn:hover { background: rgba(0,0,0,0.1); transform: rotate(90deg); }
         
-        .profile-hero { padding: 4px 16px 32px; text-align: center; margin-bottom: 12px; }
-        .profile-avatar { width: 110px; height: 110px; border-radius: 50%; border: 4px solid white; margin-bottom: 16px; object-fit: cover; box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
-        .profile-name { font-size: 22px; font-weight: 950; color: var(--text-main); margin-bottom: 4px; letter-spacing: -0.02em; }
-        .profile-date { font-size: 13px; color: var(--text-sub); font-weight: 800; margin-bottom: 20px; display: block; }
-        .profile-bio { font-size: 14.5px; color: #444; line-height: 1.7; padding: 0 28px; font-weight: 600; text-align: left; background: rgba(255,255,255,0.5); border-radius: 20px; padding: 20px 24px; margin: 0 16px; border: 1px solid rgba(255,255,255,0.5); }
+        .modal-header-nav { padding: 16px; position: sticky; top: 0; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); z-index: 50; border-bottom: 1px solid rgba(0,0,0,0.05); display: flex; align-items: center; justify-content: space-between; }
+        .modal-back-btn { font-size: 24px; color: var(--text-main); cursor: pointer; text-decoration: none; display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; font-weight: 300; }
+        .modal-title { font-size: 15px; font-weight: 900; color: var(--text-main); }
+        
+        .profile-data-card { background: #FFF; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.02); padding: 24px 16px; border: 1px solid rgba(0,0,0,0.03); margin-bottom: 24px; }
+        .pd-img-row { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; }
+        .pd-icon { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 2px solid #EEE; }
+        .pd-name { font-size: 18px; font-weight: 950; color: var(--text-main); margin-bottom: 4px; }
+        .pd-date { font-size: 11px; font-weight: 800; color: var(--text-sub); }
+        .pd-label { font-size: 12px; font-weight: 900; color: var(--text-sub); margin-bottom: 8px; }
+        .pd-value { background: #F8F9FB; padding: 14px 16px; border-radius: 12px; font-size: 14px; font-weight: 800; color: var(--text-main); border: 1px solid rgba(0,0,0,0.02); margin-bottom: 20px; word-break: break-all; }
+        .pd-bio { background: #F8F9FB; padding: 16px; border-radius: 12px; font-size: 14px; font-weight: 600; color: var(--text-main); line-height: 1.6; border: 1px solid rgba(0,0,0,0.02); }
+        
+        .fp-archive-btn { width: 100%; border-radius: 16px; padding: 16px; font-size: 15px; font-weight: 900; background: linear-gradient(135deg, var(--primary-color), var(--primary-light)); border: none; color: white; box-shadow: 0 8px 20px rgba(255,107,0,0.2); transition: all 0.2s; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 8px; }
+        .fp-archive-btn:active { transform: scale(0.97); }
+        .fp-archive-btn svg { transition: transform 0.3s; }
+        .fp-archive-btn.open svg { transform: rotate(180deg); }
 
-        .profile-section { padding: 24px 16px 8px; }
-        .section-title { font-size: 17px; font-weight: 950; margin-bottom: 18px; display: flex; align-items: center; gap: 10px; color: var(--text-main); }
-        .section-line { width: 4.5px; height: 18px; background: var(--primary-color); border-radius: 10px; }
+        .archives-container { display: none; margin-top: 24px; animation: slideDown 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .archives-container.active { display: block; }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Review List Styles Adaptation */
-        .archive-card { background: rgba(255,255,255,0.7); border-radius: 24px; border: 1px solid rgba(255,255,255,0.6); margin-bottom: 16px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.02); transition: 0.3s; }
-        .archive-card:hover { transform: scale(1.02); border-color: var(--primary-light); }
-        .ac-main { display: flex; padding: 14px; gap: 14px; align-items: center; }
-        .ac-thumb-wrap { width: 84px; height: 84px; border-radius: 16px; overflow: hidden; flex-shrink: 0; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-        .ac-thumb-wrap img { width: 100%; height: 100%; object-fit: cover; }
-        .ac-info { flex: 1; }
-        .ac-title { font-size: 15px; font-weight: 950; margin-bottom: 5px; color: var(--text-main); }
-        .ac-date { font-size: 11px; color: var(--text-sub); font-weight: 700; opacity: 0.7; }
-
-        .c-card { background: rgba(255,255,255,0.7); border-radius: 28px; overflow: hidden; margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.6); box-shadow: 0 10px 30px rgba(0,0,0,0.04); transition: 0.3s; }
-        .c-card:hover { transform: scale(1.01); }
-        .c-thumb { width:100%; aspect-ratio: 16/9; background: #EEE; position: relative; }
-        .c-thumb img { width:100%; height:100%; object-fit:cover; }
-        .c-info { padding: 18px; }
-        .c-title { font-size: 15.5px; font-weight: 950; margin-bottom: 6px; color: var(--text-main); }
-        .c-date { font-size: 12px; color: var(--text-sub); font-weight: 750; opacity: 0.7; }
+        /* Archive Card Style from my_albums.html */
+        .archive-card { background: #FFF; border-radius: 20px; border: 1px solid rgba(0,0,0,0.05); margin-bottom: 20px; overflow: hidden; position: relative; box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
+        .ac-header { padding: 12px 16px; border-bottom: 1px solid rgba(0,0,0,0.03); display: flex; align-items: center; justify-content: space-between; }
+        .ac-platform { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 900; color: var(--text-main); }
+        .ac-platform img { width: 14px; height: 14px; object-fit: contain; }
+        .ac-main { display: flex; padding: 16px; gap: 16px; align-items: flex-start; }
+        .ac-info { flex: 1; min-width: 0; text-align: left; }
+        .ac-title { font-size: 15px; font-weight: 950; line-height: 1.4; margin-bottom: 6px; color: var(--text-main); }
+        .ac-date { font-size: 11px; color: var(--text-sub); font-weight: 800; }
+        .thumb-wrap { position: relative; width: 80px; height: 80px; flex-shrink: 0; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .ac-thumb { width: 100%; height: 100%; object-fit: cover; }
+        .type-badge { position: absolute; bottom: 4px; left: 4px; padding: 4px 8px; border-radius: 6px; font-size: 9px; font-weight: 900; color: #FFF; display: flex; align-items: center; gap: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.2); backdrop-filter: blur(4px); }
+        .type-badge.video { background: rgba(255, 59, 48, 0.9); }
+        .type-badge.image { background: rgba(0, 122, 255, 0.9); }
+        
+        .ac-version-sec { padding: 0 16px 16px; display: flex; flex-direction: column; gap: 16px; }
+        .v-row { display: flex; flex-direction: column; gap: 12px; padding: 16px; background: rgba(248,249,251,0.5); border-radius: 16px; border: 1px solid rgba(0,0,0,0.03); text-align: left; box-shadow: 0 2px 10px rgba(0,0,0,0.02); }
+        .v-name { font-size: 14px; font-weight: 950; color: var(--text-main); }
+        .v-time { font-size: 11px; color: var(--text-sub); font-weight: 800; margin-top: 4px; display: block; }
+        .v-thumb-edit { width: 100%; height: 130px; border-radius: 12px; object-fit: cover; background: #EEE; border: 1px solid rgba(0,0,0,0.05); }
     </style>
 </head>
 <body>
@@ -77,11 +92,14 @@
         <main class="p-4 anim-fade" style="padding-bottom: 110px;">
             <section class="mb-6">
                 <div class="stats-row">
-                    <div class="stat-btn"><span class="stat-v">1,248</span><span class="stat-l">キュレーター</span></div>
-                    <div class="stat-btn"><span class="stat-v">5.2k</span><span class="stat-l">総投稿数</span></div>
-                    <div class="stat-btn"><span class="stat-v">842</span><span class="stat-l">神認定</span></div>
-                    <div class="stat-btn"><span class="stat-v">32.4</span><span class="stat-l">チップ(DAIM)</span></div>
+                    <div class="stat-btn"><span class="stat-v">1,248</span><span class="stat-l">キュレータ数</span></div>
+                    <div class="stat-btn"><span class="stat-v">5.2k</span><span class="stat-l">投稿数</span></div>
+                    <div class="stat-btn"><span class="stat-v">3,450</span><span class="stat-l">アーカイブ数</span></div>
+                    <div class="stat-btn"><span class="stat-v">842</span><span class="stat-l">神認定数</span></div>
+                    <div class="stat-btn"><span class="stat-v heart">12.8k</span><span class="stat-l">音量(いいね)</span></div>
+                    <div class="stat-btn"><span class="stat-v money">¥125,400</span><span class="stat-l">投げ銭</span></div>
                 </div>
+                <p style="text-align: right; font-size: 10px; color: var(--text-sub); margin-top: -8px; margin-right: 4px;">※上記の数値は総合計で記載されています</p>
             </section>
 
             <!-- New Fan Section (Vertical - Premium) -->
@@ -183,12 +201,9 @@
             </section>
         </main>
 
-        <!-- Profile Modal -->
-        <div class="modal-overlay" id="profileModal" onclick="closeProfile()">
-            <div class="modal-sheet" onclick="event.stopPropagation()">
-                <header class="modal-header">
-                    <button class="close-btn" onclick="closeProfile()">✕</button>
-                </header>
+        <!-- Full Page Modal Profile Overlay -->
+        <div class="modal-overlay" id="profileModal">
+            <div class="modal-sheet">
                 <div id="modalContent">
                     <!-- Dynamic Content -->
                 </div>
@@ -284,52 +299,106 @@
             const fan = fanData[index];
             const content = document.getElementById('modalContent');
             
-            let archiveHTML = fan.archives.length > 0 ? fan.archives.map(a => `
+            let archiveHTML = fan.archives.length > 0 ? fan.archives.map((a, i) => {
+                const isVideo = i % 2 === 0;
+                const badge = isVideo ? '<div class="type-badge video">🎥 動画</div>' : '<div class="type-badge image">📸 画像</div>';
+                return `
                 <div class="archive-card">
+                    <div class="ac-header">
+                        <div class="ac-platform"><img src="images/Myalbumlogo_small.png" style="width:14px; height:14px;"> MYアルバム限定コンテンツ</div>
+                    </div>
                     <div class="ac-main">
-                        <div class="ac-thumb-wrap"><img src="${a.thumb}"></div>
+                        <div class="thumb-wrap">
+                            <img class="ac-thumb" src="${a.thumb}">
+                            ${badge}
+                        </div>
                         <div class="ac-info">
                             <div class="ac-title">${a.title}</div>
                             <div class="ac-date">${a.date}</div>
                         </div>
                     </div>
-                </div>
-            `).join('') : '<p class="text-sub text-xs">まだアーカイブはありません</p>';
-
-            let officialHTML = fan.official.length > 0 ? fan.official.map(o => `
-                <div class="c-card">
-                    <div class="c-thumb">
-                        <img src="${o.thumb}">
-                        <div class="badge badge-god" style="position:absolute; top:12px; right:12px; font-size:10px; padding:6px 12px; box-shadow:0 4px 10px rgba(0,0,0,0.2);">公認</div>
+                    <div class="ac-version-sec">
+                        <div class="v-row">
+                            <img src="${a.thumb}" class="v-thumb-edit" style="filter: brightness(1.1) contrast(1.1);">
+                            <div class="v-name">${isVideo ? 'ファンミーティング編集版' : 'カラーコレクション'}</div>
+                            <div class="v-time">2026/03/21 12:45</div>
+                        </div>
                     </div>
-                    <div class="c-info">
-                        <div class="c-title" style="font-size:16px;">${o.title}</div>
-                        <div class="c-date">掲載日：${o.date}</div>
-                    </div>
-                </div>
-            `).join('') : '<p class="text-sub text-xs">公認コンテンツはまだありません</p>';
+                </div>`;
+            }).join('') : '<div style="text-align:center; padding: 20px; color: var(--text-sub); font-weight: 800; font-size: 13px;">まだアーカイブはありません</div>';
 
             content.innerHTML = `
-                <div class="profile-hero">
-                    <img src="${fan.icon}" class="profile-avatar">
-                    <h2 class="profile-name">${fan.name}</h2>
-                    <span class="profile-date">登録日: ${fan.date}</span>
-                    <p class="profile-bio">${fan.bio}</p>
+                <div class="modal-header-nav">
+                    <div class="modal-back-btn" onclick="closeProfile()">‹</div>
+                    <div class="modal-title">新しいファンの情報</div>
+                    <div style="width: 32px;"></div>
                 </div>
                 
-                <div class="profile-section">
-                    <h3 class="section-title"><span class="section-line"></span>この人のアーカイブ一覧</h3>
-                    ${archiveHTML}
-                </div>
+                <div style="padding: 16px; padding-bottom: 60px;">
+                    <div class="profile-data-card">
+                        <div class="pd-img-row">
+                            <img src="${fan.icon}" class="pd-icon">
+                            <div>
+                                <div class="pd-name">${fan.name}</div>
+                                <div class="pd-date">登録日: ${fan.date}</div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="pd-label">クリエイターネーム (表示名)</div>
+                            <div class="pd-value">${fan.name}</div>
+                        </div>
+                        
+                        <div>
+                            <div class="pd-label">自己紹介</div>
+                            <div class="pd-bio">${fan.bio}</div>
+                        </div>
+                    </div>
 
-                <div class="profile-section">
-                    <h3 class="section-title"><span class="section-line"></span>この人の「公認コンテンツ」</h3>
-                    ${officialHTML}
+                    <button class="fp-archive-btn" id="toggleArchiveBtn" onclick="toggleFanArchives()">
+                        アーカイブ一覧を見る
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
+                    </button>
+
+                    <div id="fan-archives-list" class="archives-container">
+                        <div style="text-align: left; font-size: 16px; font-weight: 950; margin-bottom: 16px; margin-top: 24px; display: flex; align-items: center; gap: 8px; color: var(--text-main);">
+                            <span style="width: 4px; height: 16px; background: var(--primary-color); border-radius: 2px;"></span>
+                            MYアルバム アーカイブ一覧
+                        </div>
+                        ${archiveHTML}
+                    </div>
                 </div>
             `;
 
             document.getElementById('profileModal').classList.add('active');
             document.body.style.overflow = 'hidden';
+            
+            setTimeout(() => {
+                document.querySelector('.modal-sheet').scrollTop = 0;
+            }, 10);
+        }
+
+        function toggleFanArchives() {
+            const container = document.getElementById('fan-archives-list');
+            const btn = document.getElementById('toggleArchiveBtn');
+            const sheet = document.querySelector('.modal-sheet');
+            
+            if (container.classList.contains('active')) {
+                container.classList.remove('active');
+                btn.classList.remove('open');
+                btn.innerHTML = 'アーカイブ一覧を見る <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>';
+            } else {
+                container.classList.add('active');
+                btn.classList.add('open');
+                btn.innerHTML = 'アーカイブ一覧を閉じる <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M7 14l5-5 5 5z"/></svg>';
+                
+                setTimeout(() => {
+                    sheet.scrollTo({
+                        top: btn.offsetTop - 16,
+                        behavior: 'smooth'
+                    });
+                }, 100);
+            }
         }
 
         function closeProfile() {
