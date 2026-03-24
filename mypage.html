@@ -47,37 +47,64 @@
 
             <h3 class="mb-4 ml-2">SNS自動連携設定</h3>
             <div class="setting-section">
-                <div class="setting-item">
-                    <div class="setting-label"><div class="sns-icon is-img" style="width:24px; height:24px;"><img src="images/icon/X.png" alt="X"></div> X (Twitter)</div>
-                    <div class="flex items-center gap-3">
-                        <span class="sns-status-text">連携中</span>
-                        <label class="toggle-switch"><input type="checkbox" checked><span class="slider"></span></label>
+                <div class="setting-item" style="flex-direction: column; align-items: stretch; gap: 8px;">
+                    <div class="flex items-center justify-between">
+                        <div class="setting-label"><div class="sns-icon is-img" style="width:24px; height:24px;"><img src="images/icon/X.png" alt="X"></div> X (Twitter)</div>
+                        <div class="flex items-center gap-3">
+                            <span class="sns-status-text">連携中</span>
+                            <label class="toggle-switch"><input type="checkbox" checked><span class="slider"></span></label>
+                        </div>
+                    </div>
+                    <div class="text-xs" style="padding-left: 36px; padding-right: 16px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                        <span id="url-x" style="color:var(--primary-color); text-decoration: underline; cursor:pointer;" onclick="editSNSUrl('X (Twitter)', 'url-x')">https://x.com/aoikumi_official</span>
                     </div>
                 </div>
-                <div class="setting-item">
-                    <div class="setting-label"><div class="sns-icon is-img" style="width:24px; height:24px;"><img src="images/icon/Instagram.png" alt="Instagram"></div> Instagram</div>
-                    <div class="flex items-center gap-3">
-                        <span class="sns-status-text">連携中</span>
-                        <label class="toggle-switch"><input type="checkbox" checked><span class="slider"></span></label>
+                <div class="setting-item" style="flex-direction: column; align-items: stretch; gap: 8px;">
+                    <div class="flex items-center justify-between">
+                        <div class="setting-label"><div class="sns-icon is-img" style="width:24px; height:24px;"><img src="images/icon/Instagram.png" alt="Instagram"></div> Instagram</div>
+                        <div class="flex items-center gap-3">
+                            <span class="sns-status-text">連携中</span>
+                            <label class="toggle-switch"><input type="checkbox" checked><span class="slider"></span></label>
+                        </div>
+                    </div>
+                    <div class="text-xs" style="padding-left: 36px; padding-right: 16px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                        <span id="url-ig" style="color:var(--primary-color); text-decoration: underline; cursor:pointer;" onclick="editSNSUrl('Instagram', 'url-ig')">https://instagram.com/aoikumi_official</span>
                     </div>
                 </div>
-                <div class="setting-item">
-                    <div class="setting-label"><div class="sns-icon is-img" style="width:24px; height:24px;"><img src="images/icon/Youtube.png" alt="YouTube"></div> YouTube</div>
-                    <div class="flex items-center gap-3">
-                        <button class="btn btn-outline btn-sm" style="width:auto; padding:4px 12px; font-size:10px;">連携する</button>
+                <div class="setting-item" style="flex-direction: column; align-items: stretch; gap: 8px;">
+                    <div class="flex items-center justify-between">
+                        <div class="setting-label"><div class="sns-icon is-img" style="width:24px; height:24px;"><img src="images/icon/Youtube.png" alt="YouTube"></div> YouTube</div>
+                        <div class="flex items-center gap-3">
+                            <span class="sns-status-text" style="color:var(--text-sub);">未連携</span>
+                            <button class="btn btn-outline btn-sm" style="width:auto; padding:4px 12px; font-size:10px;">連携する</button>
+                        </div>
+                    </div>
+                    <div class="text-xs" style="padding-left: 36px; padding-right: 16px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                        <span id="url-yt" style="color:var(--text-sub); text-decoration: underline; cursor:pointer;" onclick="editSNSUrl('YouTube', 'url-yt')">URLを設定...</span>
                     </div>
                 </div>
-                <div class="setting-item">
-                    <div class="setting-label"><div class="sns-icon is-img" style="width:24px; height:24px;"><img src="images/icon/Tictok.png" alt="TikTok"></div> TikTok</div>
-                    <div class="flex items-center gap-3">
-                        <span class="sns-status-text">連携中</span>
-                        <label class="toggle-switch"><input type="checkbox" checked><span class="slider"></span></label>
+                <div class="setting-item" style="flex-direction: column; align-items: stretch; gap: 8px;">
+                    <div class="flex items-center justify-between">
+                        <div class="setting-label"><div class="sns-icon is-img" style="width:24px; height:24px;"><img src="images/icon/Tictok.png" alt="TikTok"></div> TikTok</div>
+                        <div class="flex items-center gap-3">
+                            <span class="sns-status-text">連携中</span>
+                            <label class="toggle-switch"><input type="checkbox" checked><span class="slider"></span></label>
+                        </div>
+                    </div>
+                    <div class="text-xs" style="padding-left: 36px; padding-right: 16px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                        <span id="url-tt" style="color:var(--primary-color); text-decoration: underline; cursor:pointer;" onclick="editSNSUrl('TikTok', 'url-tt')">https://tiktok.com/@aoikumi_official</span>
                     </div>
                 </div>
-                <div class="setting-item">
-                    <div class="setting-label"><div class="sns-icon is-img" style="width:24px; height:24px;"><img src="images/icon/showroom.png" alt="SHOWROOM"></div> SHOWROOM</div>
-                    <div class="flex items-center gap-3">
-                        <button class="btn btn-outline btn-sm" style="width:auto; padding:4px 12px; font-size:10px;">連携する</button>
+                <div class="setting-item" style="flex-direction: column; align-items: stretch; gap: 8px;">
+                    <div class="flex items-center justify-between">
+                        <div class="setting-label"><div class="sns-icon is-img" style="width:24px; height:24px;"><img src="images/icon/showroom.png" alt="SHOWROOM"></div> SHOWROOM</div>
+                        <div class="flex items-center gap-3">
+                            <span class="sns-status-text" style="color:var(--text-sub);">未連携</span>
+                            <button class="btn btn-outline btn-sm" style="width:auto; padding:4px 12px; font-size:10px;">連携する</button>
+                        </div>
+                    </div>
+                    <div class="text-xs" style="padding-left: 36px; padding-right: 16px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                        <span id="url-sr" style="color:var(--text-sub); text-decoration: underline; cursor:pointer;" onclick="editSNSUrl('SHOWROOM', 'url-sr')">URLを設定...</span>
                     </div>
                 </div>
             </div>
@@ -108,6 +135,24 @@
             </a>
         </nav>
     </div>
+    <script>
+        function editSNSUrl(platformName, elementId) {
+            const el = document.getElementById(elementId);
+            const currentStr = el.innerText;
+            const initialVal = (currentStr === 'URLを設定...' || currentStr === '未設定') ? '' : currentStr;
+            const newUrl = prompt(`${platformName} のURLまたはユーザーIDを入力してください：`, initialVal);
+
+            if (newUrl !== null) {
+                if (newUrl.trim() === '') {
+                    el.innerText = 'URLを設定...';
+                    el.style.color = 'var(--text-sub)';
+                } else {
+                    el.innerText = newUrl.trim();
+                    el.style.color = 'var(--primary-color)';
+                }
+            }
+        }
+    </script>
     <script src="app.js"></script>
 </body>
 </html>

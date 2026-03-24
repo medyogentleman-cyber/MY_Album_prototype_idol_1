@@ -63,19 +63,34 @@
 
             <div class="input-group mb-4">
                 <label class="label">氏名 <span class="required-tag">必須</span></label>
-                <input type="text" class="input" placeholder="例：蒼 くみ">
+                <div class="flex gap-2">
+                    <div style="flex:1;">
+                        <input type="text" id="name-last" class="input" placeholder="氏 (例：蒼)" oninput="validateName('name-last', 'error-name-last')">
+                        <div id="error-name-last" class="text-xs mt-1" style="display:none; color:var(--danger); font-weight:700;"></div>
+                    </div>
+                    <div style="flex:1;">
+                        <input type="text" id="name-first" class="input" placeholder="名 (例：くみ)" oninput="validateName('name-first', 'error-name-first')">
+                        <div id="error-name-first" class="text-xs mt-1" style="display:none; color:var(--danger); font-weight:700;"></div>
+                    </div>
+                </div>
+                <div class="text-xs text-sub mt-1">※各10文字以内</div>
             </div>
             <div class="input-group mb-4">
                 <label class="label">電話番号 <span class="required-tag">必須</span></label>
-                <input type="tel" class="input" placeholder="例：090-0000-0000">
+                <input type="tel" id="tel-input" class="input" placeholder="例：09000000000" oninput="validatePhone()">
+                <div class="text-xs text-sub mt-1">※ハイフンなし</div>
+                <div id="error-tel" class="text-xs mt-1" style="display:none; color:var(--danger); font-weight:700;"></div>
             </div>
             <div class="input-group mb-4">
                 <label class="label">Email <span class="required-tag">必須</span></label>
-                <input type="email" class="input" placeholder="example@office.com">
+                <input type="email" id="email-input" class="input" placeholder="example@office.com" oninput="validateEmail()">
+                <div id="error-email" class="text-xs mt-1" style="display:none; color:var(--danger); font-weight:700;"></div>
             </div>
             <div class="input-group mb-12">
                 <label class="label">住所 <span class="required-tag">必須</span></label>
-                <input type="text" class="input" placeholder="例：東京都渋谷区...">
+                <input type="text" id="address-input" class="input" placeholder="例：東京都渋谷区..." oninput="validateAddress()">
+                <div class="text-xs text-sub mt-1">※全角半角合計100文字以内</div>
+                <div id="error-address" class="text-xs mt-1" style="display:none; color:var(--danger); font-weight:700;"></div>
             </div>
 
             <button class="btn btn-primary btn-next" data-next="step-2">次へ進む</button>
@@ -89,8 +104,12 @@
 
             <div class="input-group mb-12">
                 <label class="label">MYアルバム名 <span class="optional-tag">任意</span></label>
-                <input type="text" class="input" placeholder="例：蒼くみ推し活HUB" value="蒼くみ Official HUB">
-                <p class="text-xs text-sub mt-2">※後からマイページで変更可能です。</p>
+                <input type="text" id="album-name" class="input" placeholder="例：蒼くみ推し活HUB" value="蒼くみ Official HUB" oninput="validateAlbumName()">
+                <div class="flex justify-between items-center mt-2">
+                    <p class="text-xs text-sub">※後からマイページで変更可能です。</p>
+                    <p class="text-xs text-sub">※20文字以内</p>
+                </div>
+                <div id="error-album-name" class="text-xs mt-1" style="display:none; color:var(--danger); font-weight:700;"></div>
             </div>
 
             <div class="flex gap-4">
@@ -111,7 +130,12 @@
                     <button class="btn-ghost" style="position: absolute; bottom: 0; right: 0; background: var(--primary-color); color: white; border-radius: 50%; width: 36px; height: 36px; padding: 0;" onclick="document.getElementById('icon-file').click()">📸</button>
                 </div>
                 <input type="file" id="icon-file" style="display:none;" onchange="previewImage(this, 'preview-icon')">
-                <p class="text-xs text-sub">推奨サイズ: 500x500px 以上</p>
+                <div class="text-left" style="background:#f9f9f9; padding: 16px; border-radius:12px; border:1px solid var(--border-color); width:100%; box-sizing: border-box;">
+                    <p class="text-xs font-black mb-2" style="color:var(--text-main);">📸 アイコン画像の推奨設定</p>
+                    <p class="text-xs text-sub leading-relaxed" style="margin-bottom:4px;">・推奨サイズ: 320×320px 以上の正方形 (1:1)</p>
+                    <p class="text-xs text-sub leading-relaxed" style="margin-bottom:4px;">・ファイル容量: 8MB以内 (JPGまたはPNG)</p>
+                    <p class="text-xs text-sub leading-relaxed" style="font-size:10px; margin-top:8px; display:inline-block; background:#e6f3ff; padding:2px 8px; border-radius:4px; color:#0866FF;">※Instagramプロフィールの最適基準に合わせています</p>
+                </div>
             </div>
 
             <div style="height: 20px;"></div>
@@ -130,19 +154,34 @@
 
             <div class="input-group mb-4">
                 <label class="label">事務所名 <span class="optional-tag">任意</span></label>
-                <input type="text" class="input" placeholder="例：〇〇エンターテインメント">
+                <input type="text" id="office-name" class="input" placeholder="例：〇〇エンターテインメント" oninput="validateOfficeName()">
+                <div class="text-xs text-sub mt-1">※全角半角50文字以内</div>
+                <div id="error-office-name" class="text-xs mt-1" style="display:none; color:var(--danger); font-weight:700;"></div>
             </div>
             <div class="input-group mb-4">
                 <label class="label">担当マネージャー名 <span class="optional-tag">任意</span></label>
-                <input type="text" class="input" placeholder="例：佐藤 太郎">
+                <div class="flex gap-2">
+                    <div style="flex:1;">
+                        <input type="text" id="mgr-name-last" class="input" placeholder="氏 (例：佐藤)" oninput="validateManagerName('mgr-name-last', 'error-mgr-name-last')">
+                        <div id="error-mgr-name-last" class="text-xs mt-1" style="display:none; color:var(--danger); font-weight:700;"></div>
+                    </div>
+                    <div style="flex:1;">
+                        <input type="text" id="mgr-name-first" class="input" placeholder="名 (例：太郎)" oninput="validateManagerName('mgr-name-first', 'error-mgr-name-first')">
+                        <div id="error-mgr-name-first" class="text-xs mt-1" style="display:none; color:var(--danger); font-weight:700;"></div>
+                    </div>
+                </div>
+                <div class="text-xs text-sub mt-1">※各10文字以内</div>
             </div>
             <div class="input-group mb-4">
                 <label class="label">担当者電話番号 <span class="optional-tag">任意</span></label>
-                <input type="tel" class="input" placeholder="例：03-XXXX-XXXX">
+                <input type="tel" id="mgr-tel-input" class="input" placeholder="例：09000000000" oninput="validateMgrPhone()">
+                <div class="text-xs text-sub mt-1">※ハイフンなし</div>
+                <div id="error-mgr-tel" class="text-xs mt-1" style="display:none; color:var(--danger); font-weight:700;"></div>
             </div>
             <div class="input-group mb-12">
                 <label class="label">担当者メールアドレス <span class="optional-tag">任意</span></label>
-                <input type="email" class="input" placeholder="example@office.com">
+                <input type="email" id="mgr-email-input" class="input" placeholder="example@office.com" oninput="validateMgrEmail()">
+                <div id="error-mgr-email" class="text-xs mt-1" style="display:none; color:var(--danger); font-weight:700;"></div>
             </div>
 
             <div class="flex gap-4">
@@ -152,6 +191,193 @@
         </div>
 
     </div>
+    <script>
+        function validateName(id, errorId) {
+            const input = document.getElementById(id);
+            const error = document.getElementById(errorId);
+            if (input.value.length > 10) {
+                error.innerText = '10文字以内で入力してください。';
+                error.style.display = 'block';
+                input.style.borderColor = 'var(--danger)';
+            } else {
+                error.style.display = 'none';
+                input.style.borderColor = '';
+            }
+            checkStep1();
+        }
+
+        function validatePhone() {
+            const input = document.getElementById('tel-input');
+            const error = document.getElementById('error-tel');
+            // Auto remove hyphens
+            if (input.value.includes('-')) {
+                input.value = input.value.replace(/-/g, '');
+            }
+            const val = input.value;
+            if (val.length > 11) {
+                error.innerText = '11桁以内の数値で入力してください。';
+                error.style.display = 'block';
+                input.style.borderColor = 'var(--danger)';
+            } else if (val.length > 0 && !/^\d+$/.test(val)) {
+                error.innerText = '数値のみで入力してください。';
+                error.style.display = 'block';
+                input.style.borderColor = 'var(--danger)';
+            } else {
+                error.style.display = 'none';
+                input.style.borderColor = '';
+            }
+            checkStep1();
+        }
+
+        function validateEmail() {
+            const input = document.getElementById('email-input');
+            const error = document.getElementById('error-email');
+            const val = input.value;
+            // Basic @ check; can be expanded
+            if (val.length > 0 && !val.includes('@')) {
+                error.innerText = '有効なメールアドレス（@を含む）を入力してください。';
+                error.style.display = 'block';
+                input.style.borderColor = 'var(--danger)';
+            } else {
+                error.style.display = 'none';
+                input.style.borderColor = '';
+            }
+            checkStep1();
+        }
+
+        function validateAddress() {
+            const input = document.getElementById('address-input');
+            const error = document.getElementById('error-address');
+            if (input.value.length > 100) {
+                error.innerText = '100文字以内で入力してください。';
+                error.style.display = 'block';
+                input.style.borderColor = 'var(--danger)';
+            } else {
+                error.style.display = 'none';
+                input.style.borderColor = '';
+            }
+            checkStep1();
+        }
+
+        function checkStep1() {
+            const errors = document.querySelectorAll('#step-1 [id^="error-"][style*="display: block"]');
+            const nextBtn = document.querySelector('#step-1 .btn-next');
+            if (errors.length > 0) {
+                nextBtn.style.opacity = '0.5';
+                nextBtn.style.pointerEvents = 'none';
+            } else {
+                nextBtn.style.opacity = '1';
+                nextBtn.style.pointerEvents = 'auto';
+            }
+        }
+
+        function validateAlbumName() {
+            const input = document.getElementById('album-name');
+            const error = document.getElementById('error-album-name');
+            if (input.value.length > 20) {
+                error.innerText = '20文字以内で入力してください。';
+                error.style.display = 'block';
+                input.style.borderColor = 'var(--danger)';
+            } else {
+                error.style.display = 'none';
+                input.style.borderColor = '';
+            }
+            checkStep2();
+        }
+
+        function validateOfficeName() {
+            const input = document.getElementById('office-name');
+            const error = document.getElementById('error-office-name');
+            if (input.value.length > 50) {
+                error.innerText = '50文字以内で入力してください。';
+                error.style.display = 'block';
+                input.style.borderColor = 'var(--danger)';
+            } else {
+                error.style.display = 'none';
+                input.style.borderColor = '';
+            }
+            checkStep4();
+        }
+
+        function validateManagerName(id, errorId) {
+            const input = document.getElementById(id);
+            const error = document.getElementById(errorId);
+            if (input.value.length > 10) {
+                error.innerText = '10文字以内で入力してください。';
+                error.style.display = 'block';
+                input.style.borderColor = 'var(--danger)';
+            } else {
+                error.style.display = 'none';
+                input.style.borderColor = '';
+            }
+            checkStep4();
+        }
+
+        function validateMgrPhone() {
+            const input = document.getElementById('mgr-tel-input');
+            const error = document.getElementById('error-mgr-tel');
+            if (input.value.includes('-')) {
+                input.value = input.value.replace(/-/g, '');
+            }
+            const val = input.value;
+            if (val.length > 11) {
+                error.innerText = '11桁以内の数値で入力してください。';
+                error.style.display = 'block';
+                input.style.borderColor = 'var(--danger)';
+            } else if (val.length > 0 && !/^\d+$/.test(val)) {
+                error.innerText = '数値のみで入力してください。';
+                error.style.display = 'block';
+                input.style.borderColor = 'var(--danger)';
+            } else {
+                error.style.display = 'none';
+                input.style.borderColor = '';
+            }
+            checkStep4();
+        }
+
+        function validateMgrEmail() {
+            const input = document.getElementById('mgr-email-input');
+            const error = document.getElementById('error-mgr-email');
+            const val = input.value;
+            if (val.length > 0 && !val.includes('@')) {
+                error.innerText = '有効なメールアドレス（@を含む）を入力してください。';
+                error.style.display = 'block';
+                input.style.borderColor = 'var(--danger)';
+            } else {
+                error.style.display = 'none';
+                input.style.borderColor = '';
+            }
+            checkStep4();
+        }
+
+        function checkStep2() {
+            const errors = document.querySelectorAll('#step-2 [id^="error-"][style*="display: block"]');
+            const nextBtn = document.querySelector('#step-2 .btn-next');
+            if (nextBtn) {
+                if (errors.length > 0) {
+                    nextBtn.style.opacity = '0.5';
+                    nextBtn.style.pointerEvents = 'none';
+                } else {
+                    nextBtn.style.opacity = '1';
+                    nextBtn.style.pointerEvents = 'auto';
+                }
+            }
+        }
+
+        function checkStep4() {
+            const errors = document.querySelectorAll('#step-4 [id^="error-"][style*="display: block"]');
+            const nextBtn = document.querySelector('#step-4 .btn-primary');
+            if (nextBtn) {
+                if (errors.length > 0) {
+                    nextBtn.style.opacity = '0.5';
+                    nextBtn.style.pointerEvents = 'none';
+                } else {
+                    nextBtn.style.opacity = '1';
+                    nextBtn.style.pointerEvents = 'auto';
+                }
+            }
+        }
+    </script>
     <script src="app.js"></script>
 </body>
 </html>

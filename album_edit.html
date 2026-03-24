@@ -89,22 +89,24 @@
                     <!-- Destination Selection -->
                     <div style="background: white; border: 1px solid var(--border-color); border-radius: 16px; padding: 20px; margin-bottom: 24px; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
                         <div style="position: relative;">
-                            <label style="display:block; font-size: 11px; font-weight: 800; color: var(--text-sub); margin-bottom: 8px; letter-spacing: 0.05em;">追加先アーカイブ</label>
+                            <label style="display:block; font-size: 11px; font-weight: 800; color: var(--text-sub); margin-bottom: 8px; letter-spacing: 0.05em;">追加先アーカイブ <span style="color:var(--danger-color); font-weight:bold;">※必須</span></label>
                             <div style="position: relative;">
                                 <select id="archive-select" class="input-field" style="appearance: none; padding-right: 36px;" onchange="updateArchiveToggle()">
-                                    <option value="NEW" style="color:var(--primary-color); font-weight:900;">＋ 新規アーカイブを作成する</option>
-                                    <option value="東京ライブ 神ファンサシーンまとめ(共有)">東京ライブ 神ファンサシーンまとめ(共有)</option>
-                                    <option value="夏服生写真メイキング映像(神)">夏服生写真メイキング映像(神)</option>
+                                    <option value="東京ライブ 神ファンサシーンまとめ(共有)" selected>東京ライブ 神ファンサシーンまとめ(共有)</option>
+                                    <option value="夏服生写真メイキング映像">夏服生写真メイキング映像</option>
                                     <option value="伝説の初配信 トラブル発生から神対応まで(神)">伝説の初配信 トラブル発生から神対応まで(神)</option>
                                     <option value="ゲリラ雑談配信 スクショ集(神)">ゲリラ雑談配信 スクショ集(神)</option>
                                     <option value="チェキ会 記念写真（自分用）(非公開)">チェキ会 記念写真（自分用）(非公開)</option>
+                                    <option value="NEW" style="color:var(--primary-color); font-weight:900;">＋ 新規アーカイブを作成する</option>
                                 </select>
                                 <div style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); pointer-events: none; color: var(--text-sub); display: flex;">
                                     <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
                                 </div>
                             </div>
-                            <div id="new-archive-input-container" style="display:block; margin-top: 12px;">
+                            <div id="new-archive-input-container" style="display:none; margin-top: 16px; padding-top: 12px; border-top: 1px dashed var(--border-color);">
+                                <label style="display:block; font-size: 11px; font-weight: 800; color: var(--text-sub); margin-bottom: 8px; letter-spacing: 0.05em;">新しいアーカイブ名を入力 <span style="color:var(--danger-color); font-weight:bold;">※必須</span></label>
                                 <input type="text" id="new-archive-name" class="input-field" placeholder="新しいアーカイブ名を入力">
+                                <div style="font-size: 10px; color: var(--text-sub); margin-top: 6px; font-weight: 600;">半角全角文字 20文字以内</div>
                             </div>
                         </div>
                     </div>
