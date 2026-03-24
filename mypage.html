@@ -12,6 +12,19 @@
         .setting-item:last-child { border-bottom: none; }
         .setting-label { display: flex; align-items: center; gap: 12px; font-size: 14px; font-weight: 800; }
         .sns-status-text { font-size: 11px; font-weight: 700; color: var(--text-sub); }
+        
+        /* Modal Styles */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; visibility: hidden; opacity: 0; transition: 0.3s ease; display: block !important; }
+        .modal-overlay.active { visibility: visible; opacity: 1; }
+        .modal-sheet { position: fixed; top: 0; left: 50%; transform: translateX(-50%) translateY(100vh); width: 100%; max-width: 430px; height: 100vh; background: var(--bg-color, #F4F5F7); z-index: 1001; transition: 0.4s cubic-bezier(0.19, 1, 0.22, 1); overflow-y: auto; display: flex; flex-direction: column; }
+        .modal-overlay.active .modal-sheet { transform: translateX(-50%) translateY(0); }
+        .modal-header-nav { padding: 16px; position: sticky; top: 0; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); z-index: 50; border-bottom: 1px solid rgba(0,0,0,0.05); display: flex; align-items: center; justify-content: space-between; }
+        .modal-back-btn { font-size: 24px; color: var(--text-main); cursor: pointer; display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; font-weight: 300; }
+        .modal-title { font-size: 15px; font-weight: 900; color: var(--text-main); }
+        .required-tag { font-size: 10px; font-weight: 800; color: #FFF; background: var(--danger); padding: 2px 6px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
+        .optional-tag { font-size: 10px; font-weight: 800; color: #8E8E93; background: #F2F2F7; padding: 2px 6px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
+        .w-full { width: 100%; }
+        .pb-24 { padding-bottom: 96px; }
     </style>
 </head>
 <body>
@@ -35,8 +48,12 @@
 
             <h3 class="mb-4 ml-2">アカウント設定</h3>
             <div class="setting-section">
-                <div class="setting-item" onclick="alert('氏名/Email編集画面へ')">
+                <div class="setting-item" onclick="openBasicInfo()" style="cursor:pointer;">
                     <div class="setting-label">👤 基本情報の編集</div>
+                    <span style="color:var(--text-sub);">›</span>
+                </div>
+                <div class="setting-item" onclick="openMgrInfo()" style="cursor:pointer;">
+                    <div class="setting-label">🏢 事務所・マネージャー連絡先の編集</div>
                     <span style="color:var(--text-sub);">›</span>
                 </div>
                 <div class="setting-item" onclick="alert('ログイン方法の設定へ')">
@@ -112,6 +129,114 @@
             <button class="btn btn-ghost" style="color:var(--danger); border: 1px solid rgba(255,59,48,0.1); background: white; border-radius:16px;">ログアウト</button>
         </main>
 
+        <!-- Basic Info Modal -->
+        <div class="modal-overlay" id="basicInfoModal">
+            <div class="modal-sheet">
+                <div class="modal-header-nav">
+                    <div class="modal-back-btn" onclick="closeBasicInfo()">‹</div>
+                    <div class="modal-title">基本情報の編集</div>
+                    <div style="width: 32px;"></div>
+                </div>
+                
+                <div class="p-6 pb-24">
+                    <p class="text-sub mb-6 text-xs font-black">アーティスト活動に使用する基本情報を編集します。</p>
+
+                    <div class="input-group mb-4">
+                        <label class="label">氏名 <span class="required-tag">必須</span></label>
+                        <div class="flex gap-2">
+                            <div style="flex:1;">
+                                <input type="text" id="edit-name-last" class="input" value="蒼" oninput="validateEditName('edit-name-last', 'error-edit-name-last')">
+                                <div id="error-edit-name-last" class="text-xs mt-1" style="display:none; color:var(--danger); font-weight:700;"></div>
+                            </div>
+                            <div style="flex:1;">
+                                <input type="text" id="edit-name-first" class="input" value="くみ" oninput="validateEditName('edit-name-first', 'error-edit-name-first')">
+                                <div id="error-edit-name-first" class="text-xs mt-1" style="display:none; color:var(--danger); font-weight:700;"></div>
+                            </div>
+                        </div>
+                        <div class="text-xs text-sub mt-1">※各10文字以内</div>
+                    </div>
+                    <div class="input-group mb-4">
+                        <label class="label">電話番号 <span class="required-tag">必須</span></label>
+                        <input type="tel" id="edit-tel-input" class="input" value="09012345678" oninput="validateEditPhone()">
+                        <div class="text-xs text-sub mt-1">※ハイフンなし</div>
+                        <div id="error-edit-tel" class="text-xs mt-1" style="display:none; color:var(--danger); font-weight:700;"></div>
+                    </div>
+                    <div class="input-group mb-4">
+                        <label class="label">Email <span class="required-tag">必須</span></label>
+                        <input type="email" id="edit-email-input" class="input" value="akumi@officemock.com" oninput="validateEditEmail()">
+                        <div id="error-edit-email" class="text-xs mt-1" style="display:none; color:var(--danger); font-weight:700;"></div>
+                    </div>
+                    <div class="input-group mb-12">
+                        <label class="label">住所 <span class="required-tag">必須</span></label>
+                        <input type="text" id="edit-address-input" class="input" value="東京都渋谷区神宮前1-2-3" oninput="validateEditAddress()">
+                        <div class="text-xs text-sub mt-1">※全角半角合計100文字以内</div>
+                        <div id="error-edit-address" class="text-xs mt-1" style="display:none; color:var(--danger); font-weight:700;"></div>
+                    </div>
+
+                    <button class="btn btn-primary w-full" id="btn-save-basic" onclick="saveBasicInfo()">保存する</button>
+                    
+                    <!-- Success Toast (Hidden initially) -->
+                    <div id="toast-success" style="opacity:0; visibility:hidden; transition:0.3s; position:fixed; bottom: 80px; left:50%; transform:translateX(-50%); background:rgba(0,0,0,0.85); color:white; padding:12px 24px; border-radius:24px; font-size:13px; font-weight:800; z-index:2000; box-shadow:0 8px 24px rgba(0,0,0,0.2);">
+                        ✨ 保存しました。
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Manager Info Modal -->
+        <div class="modal-overlay" id="mgrInfoModal">
+            <div class="modal-sheet">
+                <div class="modal-header-nav">
+                    <div class="modal-back-btn" onclick="closeMgrInfo()">‹</div>
+                    <div class="modal-title">事務所・マネージャー連絡先</div>
+                    <div style="width: 32px;"></div>
+                </div>
+                
+                <div class="p-6 pb-24">
+                    <p class="text-sub mb-6 text-xs font-black">運営からのお知らせなどを送付する任意連絡先です。</p>
+
+                    <div class="input-group mb-4">
+                        <label class="label">事務所名 <span class="optional-tag">任意</span></label>
+                        <input type="text" id="edit-office-name" class="input" value="〇〇エンターテインメント" oninput="validateEditOfficeName()">
+                        <div class="text-xs text-sub mt-1">※全角半角50文字以内</div>
+                        <div id="error-edit-office-name" class="text-xs mt-1" style="display:none; color:var(--danger); font-weight:700;"></div>
+                    </div>
+                    <div class="input-group mb-4">
+                        <label class="label">担当マネージャー名 <span class="optional-tag">任意</span></label>
+                        <div class="flex gap-2">
+                            <div style="flex:1;">
+                                <input type="text" id="edit-mgr-name-last" class="input" value="佐藤" oninput="validateEditManagerName('edit-mgr-name-last', 'error-edit-mgr-name-last')">
+                                <div id="error-edit-mgr-name-last" class="text-xs mt-1" style="display:none; color:var(--danger); font-weight:700;"></div>
+                            </div>
+                            <div style="flex:1;">
+                                <input type="text" id="edit-mgr-name-first" class="input" value="太郎" oninput="validateEditManagerName('edit-mgr-name-first', 'error-edit-mgr-name-first')">
+                                <div id="error-edit-mgr-name-first" class="text-xs mt-1" style="display:none; color:var(--danger); font-weight:700;"></div>
+                            </div>
+                        </div>
+                        <div class="text-xs text-sub mt-1">※各10文字以内</div>
+                    </div>
+                    <div class="input-group mb-4">
+                        <label class="label">担当者電話番号 <span class="optional-tag">任意</span></label>
+                        <input type="tel" id="edit-mgr-tel-input" class="input" value="09098765432" oninput="validateEditMgrPhone()">
+                        <div class="text-xs text-sub mt-1">※ハイフンなし</div>
+                        <div id="error-edit-mgr-tel" class="text-xs mt-1" style="display:none; color:var(--danger); font-weight:700;"></div>
+                    </div>
+                    <div class="input-group mb-12">
+                        <label class="label">担当者メールアドレス <span class="optional-tag">任意</span></label>
+                        <input type="email" id="edit-mgr-email-input" class="input" value="manager@office.com" oninput="validateEditMgrEmail()">
+                        <div id="error-edit-mgr-email" class="text-xs mt-1" style="display:none; color:var(--danger); font-weight:700;"></div>
+                    </div>
+
+                    <button class="btn btn-primary w-full" id="btn-save-mgr" onclick="saveMgrInfo()">保存する</button>
+                    
+                    <!-- Success Toast (Hidden initially) -->
+                    <div id="toast-success-mgr" style="opacity:0; visibility:hidden; transition:0.3s; position:fixed; bottom: 80px; left:50%; transform:translateX(-50%); background:rgba(0,0,0,0.85); color:white; padding:12px 24px; border-radius:24px; font-size:13px; font-weight:800; z-index:2000; box-shadow:0 8px 24px rgba(0,0,0,0.2);">
+                        ✨ 保存しました。
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <nav class="bottom-nav">
             <a href="dashboard.html" class="nav-item">
                 <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
@@ -151,6 +276,210 @@
                     el.style.color = 'var(--primary-color)';
                 }
             }
+        }
+
+        // Basic Info Form Logic
+        function openBasicInfo() {
+            document.getElementById('basicInfoModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => {
+                document.querySelector('#basicInfoModal .modal-sheet').scrollTop = 0;
+            }, 10);
+        }
+
+        function closeBasicInfo() {
+            document.getElementById('basicInfoModal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function validateEditName(id, errorId) {
+            const input = document.getElementById(id);
+            const error = document.getElementById(errorId);
+            if (input.value.length > 10) {
+                error.innerText = '10文字以内で入力してください。';
+                error.style.display = 'block';
+                input.style.borderColor = 'var(--danger)';
+            } else {
+                error.style.display = 'none';
+                input.style.borderColor = '';
+            }
+            checkBasicInfoForm();
+        }
+
+        function validateEditPhone() {
+            const input = document.getElementById('edit-tel-input');
+            const error = document.getElementById('error-edit-tel');
+            if (input.value.includes('-')) {
+                input.value = input.value.replace(/-/g, '');
+            }
+            const val = input.value;
+            if (val.length > 11) {
+                error.innerText = '11桁以内の数値で入力してください。';
+                error.style.display = 'block';
+                input.style.borderColor = 'var(--danger)';
+            } else if (val.length > 0 && !/^\d+$/.test(val)) {
+                error.innerText = '数値のみで入力してください。';
+                error.style.display = 'block';
+                input.style.borderColor = 'var(--danger)';
+            } else {
+                error.style.display = 'none';
+                input.style.borderColor = '';
+            }
+            checkBasicInfoForm();
+        }
+
+        function validateEditEmail() {
+            const input = document.getElementById('edit-email-input');
+            const error = document.getElementById('error-edit-email');
+            const val = input.value;
+            if (val.length > 0 && !val.includes('@')) {
+                error.innerText = '有効なメールアドレス（@を含む）を入力してください。';
+                error.style.display = 'block';
+                input.style.borderColor = 'var(--danger)';
+            } else {
+                error.style.display = 'none';
+                input.style.borderColor = '';
+            }
+            checkBasicInfoForm();
+        }
+
+        function validateEditAddress() {
+            const input = document.getElementById('edit-address-input');
+            const error = document.getElementById('error-edit-address');
+            if (input.value.length > 100) {
+                error.innerText = '100文字以内で入力してください。';
+                error.style.display = 'block';
+                input.style.borderColor = 'var(--danger)';
+            } else {
+                error.style.display = 'none';
+                input.style.borderColor = '';
+            }
+            checkBasicInfoForm();
+        }
+
+        function checkBasicInfoForm() {
+            const errors = document.querySelectorAll('#basicInfoModal [id^="error-"][style*="display: block"]');
+            const nextBtn = document.getElementById('btn-save-basic');
+            if (errors.length > 0) {
+                nextBtn.style.opacity = '0.5';
+                nextBtn.style.pointerEvents = 'none';
+            } else {
+                nextBtn.style.opacity = '1';
+                nextBtn.style.pointerEvents = 'auto';
+            }
+        }
+
+        function saveBasicInfo() {
+            const toast = document.getElementById('toast-success');
+            toast.style.visibility = 'visible';
+            toast.style.opacity = '1';
+            
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => { toast.style.visibility = 'hidden'; closeBasicInfo(); }, 300);
+            }, 1000);
+        }
+
+        // Manager Info Form Logic
+        function openMgrInfo() {
+            document.getElementById('mgrInfoModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => {
+                document.querySelector('#mgrInfoModal .modal-sheet').scrollTop = 0;
+            }, 10);
+        }
+
+        function closeMgrInfo() {
+            document.getElementById('mgrInfoModal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function validateEditOfficeName() {
+            const input = document.getElementById('edit-office-name');
+            const error = document.getElementById('error-edit-office-name');
+            if (input.value.length > 50) {
+                error.innerText = '50文字以内で入力してください。';
+                error.style.display = 'block';
+                input.style.borderColor = 'var(--danger)';
+            } else {
+                error.style.display = 'none';
+                input.style.borderColor = '';
+            }
+            checkMgrInfoForm();
+        }
+
+        function validateEditManagerName(id, errorId) {
+            const input = document.getElementById(id);
+            const error = document.getElementById(errorId);
+            if (input.value.length > 10) {
+                error.innerText = '10文字以内で入力してください。';
+                error.style.display = 'block';
+                input.style.borderColor = 'var(--danger)';
+            } else {
+                error.style.display = 'none';
+                input.style.borderColor = '';
+            }
+            checkMgrInfoForm();
+        }
+
+        function validateEditMgrPhone() {
+            const input = document.getElementById('edit-mgr-tel-input');
+            const error = document.getElementById('error-edit-mgr-tel');
+            if (input.value.includes('-')) {
+                input.value = input.value.replace(/-/g, '');
+            }
+            const val = input.value;
+            if (val.length > 11) {
+                error.innerText = '11桁以内の数値で入力してください。';
+                error.style.display = 'block';
+                input.style.borderColor = 'var(--danger)';
+            } else if (val.length > 0 && !/^\d+$/.test(val)) {
+                error.innerText = '数値のみで入力してください。';
+                error.style.display = 'block';
+                input.style.borderColor = 'var(--danger)';
+            } else {
+                error.style.display = 'none';
+                input.style.borderColor = '';
+            }
+            checkMgrInfoForm();
+        }
+
+        function validateEditMgrEmail() {
+            const input = document.getElementById('edit-mgr-email-input');
+            const error = document.getElementById('error-edit-mgr-email');
+            const val = input.value;
+            if (val.length > 0 && !val.includes('@')) {
+                error.innerText = '有効なメールアドレス（@を含む）を入力してください。';
+                error.style.display = 'block';
+                input.style.borderColor = 'var(--danger)';
+            } else {
+                error.style.display = 'none';
+                input.style.borderColor = '';
+            }
+            checkMgrInfoForm();
+        }
+
+        function checkMgrInfoForm() {
+            const errors = document.querySelectorAll('#mgrInfoModal [id^="error-"][style*="display: block"]');
+            const nextBtn = document.getElementById('btn-save-mgr');
+            if (errors.length > 0) {
+                nextBtn.style.opacity = '0.5';
+                nextBtn.style.pointerEvents = 'none';
+            } else {
+                nextBtn.style.opacity = '1';
+                nextBtn.style.pointerEvents = 'auto';
+            }
+        }
+
+        function saveMgrInfo() {
+            const toast = document.getElementById('toast-success-mgr');
+            toast.style.visibility = 'visible';
+            toast.style.opacity = '1';
+            
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => { toast.style.visibility = 'hidden'; closeMgrInfo(); }, 300);
+            }, 1000);
         }
     </script>
     <script src="app.js"></script>
