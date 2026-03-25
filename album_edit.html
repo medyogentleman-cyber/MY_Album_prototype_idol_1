@@ -126,10 +126,15 @@
 
             <!-- Uploading / Results View -->
             <div id="view-selected" style="display:none;">
+                <div style="padding: 16px 16px 0;">
+                    <span style="font-size:11px; font-weight:800; color:var(--text-sub);">追加先アーカイブ:</span>
+                    <div id="selected-archive-display" style="font-size:14px; font-weight:900; color:var(--text-main); margin-top:4px; padding: 10px 14px; background: white; border-radius: 12px; border: 1px solid var(--border-color); box-shadow: 0 2px 8px rgba(0,0,0,0.02);"></div>
+                </div>
+
                 <div class="overall-prog" id="overall-prog" style="display:block;">
                     <div class="op-header">
-                        <div class="op-title" id="op-status-text">アップロード中...</div>
-                        <div class="op-counts" id="op-counts">0 / 8件完了</div>
+                        <div class="op-title" id="op-status-text">アップロード準備完了</div>
+                        <div class="op-counts" id="op-counts">0 / 3件完了</div>
                     </div>
                     <div class="op-bar-bg">
                         <div class="op-bar-fill" id="op-bar"></div>
@@ -139,7 +144,7 @@
                 <!-- Action CTA -->
                 <div class="cta-bottom" id="cta-start" style="display:block;">
                     <div class="blur-bg">
-                        <button class="btn-large btn-primary" onclick="startUpload()" style="flex-direction: row; gap: 8px;">アップロード開始</button>
+                        <button id="cta-btn" class="btn-large btn-primary" onclick="startUpload()" style="flex-direction: row; gap: 8px;">アップロード開始</button>
                     </div>
                 </div>
 
@@ -197,31 +202,60 @@
     
     <script>
         const MOCK_QUEUE = [
-            { id: 1, name: "IMG_8231.jpg", size: "3.2 MB", progress: 0, status: "wait" },
-            { id: 2, name: "IMG_8232.jpg", size: "4.1 MB", progress: 0, status: "wait" },
-            { id: 3, name: "DAOI_DANCE.mp4", size: "650 MB", progress: 0, status: "wait" }
+            { id: 1, name: "IMG_8231.jpg", size: "3.2 MB", progress: 0, status: "wait", error: false },
+            { id: 2, name: "IMG_8232.jpg", size: "4.1 MB", progress: 0, status: "wait", error: false },
+            { id: 3, name: "DAOI_DANCE.mp4", size: "650 MB", progress: 0, status: "wait", error: false }
         ];
 
         let uploadInterval = null;
+        let hasErrored = false;
 
         function handleSelectFiles() {
+            const select = document.getElementById('archive-select');
+            let archiveName = select.options[select.selectedIndex].text;
+            if (select.value === 'NEW') {
+                archiveName = document.getElementById('new-archive-name').value || '未設定の新規アーカイブ';
+            }
+            document.getElementById('selected-archive-display').innerText = archiveName;
+
             document.getElementById('view-init').style.display = 'none';
             document.getElementById('view-selected').style.display = 'block';
+            
+            document.getElementById('cta-start').style.display = 'block';
+            const btn = document.getElementById('cta-btn');
+            btn.innerText = 'アップロード開始';
+            btn.className = 'btn-large btn-primary';
+            btn.setAttribute('onclick', 'startUpload()');
+            
+            hasErrored = false;
+            MOCK_QUEUE.forEach(f => { f.progress = 0; f.status = 'wait'; });
             renderQueue();
         }
 
         function renderQueue() {
             const list = document.getElementById('file-queue');
             list.innerHTML = '';
-            MOCK_QUEUE.forEach(f => {
+            MOCK_QUEUE.forEach((f) => {
+                let statusText = '待機中';
+                let statusColor = 'var(--primary-color)';
+                let bgStyle = '';
+                
+                if(f.status === 'uploading') { statusText = f.progress + '%'; }
+                if(f.status === 'done') { statusText = '完了'; statusColor = '#34C759'; }
+                if(f.status === 'error') { 
+                    statusText = '通信エラー'; 
+                    statusColor = 'var(--danger-color)'; 
+                    bgStyle = 'border-color:var(--danger-color); background:#FFF0F0;';
+                }
+
                 list.innerHTML += `
-                    <div class="file-card">
+                    <div class="file-card" id="file-card-${f.id}" style="${bgStyle}">
                         <div class="fc-thumb-mini">${f.name.endsWith('mp4') ? '🎥' : '🖼️'}</div>
                         <div style="flex:1;">
-                            <div style="font-size:13px; font-weight:800;">${f.name}</div>
+                            <div style="font-size:13px; font-weight:900; color:${f.status === 'error' ? 'var(--danger-color)' : 'inherit'}">${f.name}</div>
                             <div style="font-size:11px; color:var(--text-sub);">${f.size}</div>
                         </div>
-                        <div style="font-size:11px; font-weight:800; color:var(--primary-color);" id="prog-${f.id}">${f.status === 'wait' ? '待機中' : f.progress + '%'}</div>
+                        <div style="font-size:12px; font-weight:900; color:${statusColor};" id="prog-${f.id}">${statusText}</div>
                     </div>
                 `;
             });
@@ -229,32 +263,85 @@
 
         function startUpload() {
             document.getElementById('cta-start').style.display = 'none';
-            let total = 0;
+            document.getElementById('op-status-text').innerText = 'アップロード中...';
+            document.getElementById('op-status-text').style.color = 'var(--text-main)';
+            document.getElementById('op-bar').style.backgroundColor = 'var(--primary-color)';
+            
+            MOCK_QUEUE.forEach(f => {
+                if(f.status === 'wait' || f.status === 'error') {
+                    f.status = 'uploading';
+                }
+            });
+            renderQueue();
+
+            let tick = 0;
             uploadInterval = setInterval(() => {
-                total += 2;
-                MOCK_QUEUE.forEach(f => {
-                    if(f.progress < 100) f.progress += Math.floor(Math.random() * 5 + 1);
-                    if(f.progress > 100) f.progress = 100;
-                    document.getElementById(`prog-${f.id}`).innerText = f.progress + '%';
+                tick++;
+                let totalProgress = 0;
+
+                MOCK_QUEUE.forEach((f, idx) => {
+                    if (f.status === 'uploading') {
+                        // Mock Connection interrupt on large video
+                        if (idx === 2 && !hasErrored && tick > 15 && f.progress > 40) {
+                            f.status = 'error';
+                            hasErrored = true;
+                            clearInterval(uploadInterval);
+                            showErrorState();
+                            return;
+                        }
+                        
+                        let speed = f.name.endsWith('mp4') ? 5 : 20; // slower for video
+                        f.progress += Math.floor(Math.random() * speed + 2);
+                        if(f.progress >= 100) {
+                            f.progress = 100;
+                            f.status = 'done';
+                        }
+                    }
+                    if(f.status === 'done') totalProgress += 100;
+                    else totalProgress += f.progress;
                 });
-                document.getElementById('op-bar').style.width = total + '%';
-                if(total >= 100) {
+
+                if (hasErrored) return;
+
+                let overallPct = Math.floor(totalProgress / MOCK_QUEUE.length);
+                document.getElementById('op-bar').style.width = overallPct + '%';
+                
+                const doneCount = MOCK_QUEUE.filter(f => f.status === 'done').length;
+                document.getElementById('op-counts').innerText = `${doneCount} / ${MOCK_QUEUE.length}件完了`;
+
+                renderQueue();
+
+                if(doneCount === MOCK_QUEUE.length) {
                     clearInterval(uploadInterval);
                     showComplete();
                 }
-            }, 100);
+            }, 400);
+        }
+
+        function showErrorState() {
+            renderQueue();
+            const btn = document.getElementById('cta-btn');
+            btn.innerText = '通信エラーが発生しました - 再試行';
+            btn.style.background = 'var(--danger-color)';
+            btn.style.boxShadow = '0 4px 16px rgba(255,59,48,0.3)';
+            document.getElementById('cta-start').style.display = 'block';
+            
+            document.getElementById('op-status-text').innerText = '通信が不安定です (Wi-Fi環境を推奨)';
+            document.getElementById('op-status-text').style.color = 'var(--danger-color)';
+            document.getElementById('op-bar').style.backgroundColor = 'var(--danger-color)';
         }
 
         function showComplete() {
+            document.getElementById('cta-start').style.display = 'none';
             document.getElementById('op-status-text').innerText = 'アップロード完了！';
-            document.getElementById('op-counts').innerText = '3 / 3 件完了';
+            document.getElementById('op-status-text').style.color = '#34C759';
             document.getElementById('op-bar').style.backgroundColor = '#34C759';
             document.getElementById('status-box').innerHTML = `
-                <div style="background:white; padding:20px; border-radius:16px; text-align:center; border:1px solid var(--border-color); box-shadow:0 4px 12px rgba(0,0,0,0.05);">
-                    <div style="font-size:32px; margin-bottom:12px;">✅</div>
-                    <div style="font-weight:900; margin-bottom:8px;">アップロードに成功しました</div>
-                    <p style="font-size:12px; color:var(--text-sub); margin-bottom:20px;">正常にアーカイブへ追加されました。</p>
-                    <button class="btn-large btn-primary" onclick="location.href='dashboard.html'" style="padding:12px;">ダッシュボードへ戻る</button>
+                <div style="background:white; padding:24px; border-radius:16px; text-align:center; border:1px solid var(--border-color); box-shadow:0 4px 12px rgba(0,0,0,0.05);">
+                    <div style="font-size:40px; margin-bottom:12px;">✅</div>
+                    <div style="font-weight:900; font-size:16px; margin-bottom:8px;">アップロードに成功しました</div>
+                    <p style="font-size:12px; color:var(--text-sub); margin-bottom:24px; line-height:1.5;">正常にアーカイブへ追加されました。<br>処理が完了次第、ファンに通知が送信されます。</p>
+                    <button class="btn-large btn-primary" onclick="location.href='dashboard.html'" style="padding:16px; background:#1a202c; box-shadow:none;">ダッシュボードへ戻る</button>
                 </div>
             `;
         }

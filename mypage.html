@@ -166,6 +166,12 @@
                         <input type="email" id="edit-email-input" class="input" value="akumi@officemock.com" oninput="validateEditEmail()">
                         <div id="error-edit-email" class="text-xs mt-1" style="display:none; color:var(--danger); font-weight:700;"></div>
                     </div>
+                    <div class="input-group mb-4">
+                        <label class="label">郵便番号 <span class="required-tag">必須</span></label>
+                        <input type="tel" id="edit-zip-input" class="input" value="1500001" oninput="validateEditZip()" maxlength="7">
+                        <div class="text-xs text-sub mt-1">※ハイフンなし</div>
+                        <div id="error-edit-zip" class="text-xs mt-1" style="display:none; color:var(--danger); font-weight:700;"></div>
+                    </div>
                     <div class="input-group mb-12">
                         <label class="label">住所 <span class="required-tag">必須</span></label>
                         <input type="text" id="edit-address-input" class="input" value="東京都渋谷区神宮前1-2-3" oninput="validateEditAddress()">
@@ -339,6 +345,42 @@
             } else {
                 error.style.display = 'none';
                 input.style.borderColor = '';
+            }
+            checkBasicInfoForm();
+        }
+
+        async function validateEditZip() {
+            const input = document.getElementById('edit-zip-input');
+            const error = document.getElementById('error-edit-zip');
+            if (input.value.includes('-')) {
+                input.value = input.value.replace(/-/g, '');
+            }
+            const val = input.value;
+            
+            if (val.length > 0 && !/^\d+$/.test(val)) {
+                error.innerText = '数値のみで入力してください。';
+                error.style.display = 'block';
+                input.style.borderColor = 'var(--danger)';
+            } else if (val.length > 7) {
+                error.innerText = '7桁の数値で入力してください。';
+                error.style.display = 'block';
+                input.style.borderColor = 'var(--danger)';
+            } else {
+                error.style.display = 'none';
+                input.style.borderColor = '';
+                
+                if (val.length === 7) {
+                    try {
+                        const response = await fetch(`https://zipcloud.ibsnet.co.jp/api/search?zipcode=${val}`);
+                        const data = await response.json();
+                        if (data.status === 200 && data.results) {
+                            const result = data.results[0];
+                            const addrInput = document.getElementById('edit-address-input');
+                            addrInput.value = `${result.address1}${result.address2}${result.address3}`;
+                            validateEditAddress();
+                        }
+                    } catch (e) { console.error('API Error:', e); }
+                }
             }
             checkBasicInfoForm();
         }

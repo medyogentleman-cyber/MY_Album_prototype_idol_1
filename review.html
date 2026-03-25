@@ -46,42 +46,92 @@
         </header>
 
         <main class="p-4 anim-fade" style="padding-bottom: 110px;">
-            <div class="tab-container">
-                <div class="tab-item active" onclick="switchTab('edit-review', this)">
+            <div class="tab-container" style="display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 16px; scrollbar-width: none; -ms-overflow-style: none;">
+                <style>.tab-container::-webkit-scrollbar { display: none; }</style>
+                <div class="tab-item active" onclick="switchTab('my-album-exclusive', this)" style="flex-shrink:0; padding:12px 16px;">
                     <span style="display:flex; align-items:center; justify-content:center; gap:4px;">
-                        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-                        公認コンテンツ
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12zM10 9h8v2h-8zm0 3h4v2h-4zm0-6h8v2h-8z"/></svg>
+                        MYアルバム限定一覧
                     </span>
                 </div>
-                <div class="tab-item" onclick="switchTab('fan-original', this)">
+                <div class="tab-item" onclick="switchTab('edit-review', this)" style="flex-shrink:0; padding:12px 16px;">
+                    <span style="display:flex; align-items:center; justify-content:center; gap:4px;">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                        承認済
+                    </span>
+                </div>
+                <div class="tab-item" onclick="switchTab('fan-original', this)" style="flex-shrink:0; padding:12px 16px;">
                     <span style="display:flex; align-items:center; justify-content:center; gap:4px;">
                         <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
-                        非公認コンテンツ
+                        未承認
                     </span>
                 </div>
             </div>
 
-            <!-- Tab 1: 公認コンテンツ -->
-            <div id="edit-review" class="tab-content active">
-                <p class="text-xs text-sub mb-4">公式クリエイターや公認アカウントからの投稿を確認・承認します。</p>
+            <!-- Tab 0: MYアルバム限定一覧 -->
+            <div id="my-album-exclusive" class="tab-content active">
+                <p class="text-xs text-sub mb-4">あなたがアップロードしたMYアルバム限定コンテンツの一覧です。</p>
                 
-                <!-- Archive List Item 1 -->
-                <div class="archive-card-sm" id="edit-1">
+                <div class="archive-card-sm" onclick="location.href='view_tokyolive_list.html'" style="cursor:pointer;">
                     <div class="flex gap-3">
-                        <img src="images/aoi_thumbnails/aoi_summer_fest_yukata.png" class="ac-thumb-sm" onclick="openReviewDetail('edit-1', 'edit', 'たかひろ', 'aoi_summer_fest_yukata', 'unconfirmed')">
+                        <img src="images/aoi_thumbnails/aoi_fan_meeting.png" class="ac-thumb-sm" style="border-radius: 8px; border: 1px solid rgba(0,0,0,0.05);">
                         <div style="flex:1;">
                             <div class="flex justify-between items-start">
                                 <div>
-                                    <div class="text-xs font-black">夏祭りオフショット 編集1</div>
-                                    <div class="text-xs text-sub">by <b>たかひろ</b></div>
+                                    <div class="text-xs font-black" style="line-height:1.4;">東京ライブ 神ファンサシーンまとめ(共有)</div>
+                                    <div class="text-xs text-sub mt-1">動画 3件 / 1.2GB</div>
                                 </div>
-                                <select class="status-select status-unconfirmed" onchange="handleStatusChange(this, 'edit-1')">
-                                    <option value="unconfirmed" selected>未確認</option>
-                                    <option value="god">神認定</option>
-                                    <option value="rejected">却下</option>
-                                </select>
+                                <div class="badge badge-god" style="font-size:10px; margin-left:8px;">公開中</div>
                             </div>
-                            <div class="text-xs text-sub mt-2">2026/03/21 12:45</div>
+                            <div class="text-xs text-sub mt-2" style="font-weight:600;">最終更新: 2026/03/25 14:30</div>
+                            <div class="mt-2 text-right">
+                                <button class="btn btn-outline" style="padding: 4px 12px; font-size: 10px; border-radius: 6px; width:auto;">コンテンツ管理</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="archive-card-sm" onclick="location.href='view_summer_list.html'" style="cursor:pointer;">
+                    <div class="flex gap-3">
+                        <img src="images/aoi_thumbnails/aoi_instagram_post.png" class="ac-thumb-sm" style="border-radius: 8px; border: 1px solid rgba(0,0,0,0.05);">
+                        <div style="flex:1;">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <div class="text-xs font-black" style="line-height:1.4;">夏服生写真メイキング映像</div>
+                                    <div class="text-xs text-sub mt-1">画像 12件 / 45.1MB</div>
+                                </div>
+                                <div class="badge badge-god" style="font-size:10px; margin-left:8px;">公開中</div>
+                            </div>
+                            <div class="text-xs text-sub mt-2" style="font-weight:600;">最終更新: 2026/03/20 18:15</div>
+                            <div class="mt-2 text-right">
+                                <button class="btn btn-outline" style="padding: 4px 12px; font-size: 10px; border-radius: 6px; width:auto;">コンテンツ管理</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 2: 承認済 -->
+            <div id="edit-review" class="tab-content">
+                <p class="text-xs text-sub mb-4">承認済みのコンテンツ一覧です。神認定されたものは特別に強調表示されます。</p>
+                
+                <!-- Archive List Item 3 (Newest) -->
+                <div class="archive-card-sm" id="edit-3">
+                    <div class="flex gap-3">
+                        <img src="images/aoi_thumbnails/aoi_live_rehe_sweat.png" class="ac-thumb-sm" onclick="openReviewDetail('edit-3', 'edit', 'Kuro', 'aoi_live_rehe_sweat', 'god')">
+                        <div style="flex:1;">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <div class="text-xs font-black">ライブリハーサル 編集1</div>
+                                    <div class="text-xs text-sub mt-1">by <b>Kuro</b> <span style="margin-left:6px; padding:2px 6px; background:rgba(0,0,0,0.05); border-radius:4px; font-size:10px;">動画 1件 / 450MB</span></div>
+                                </div>
+                                <div class="flex flex-col items-end gap-1">
+                                    <div class="badge badge-god" style="font-size:10px; box-shadow: 0 0 8px rgba(255,107,0,0.4);">✨ 神認定</div>
+                                    <div class="text-[10px] text-sub text-right" style="font-size:10px; line-height:1.4; transform: scale(0.9); transform-origin: right;">
+                                        登録: 2026/03/21 14:20<br>承認: 2026/03/21 15:10
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -89,70 +139,68 @@
                 <!-- Archive List Item 2 -->
                 <div class="archive-card-sm" id="edit-2">
                     <div class="flex gap-3">
-                        <img src="images/aoi_thumbnails/aoi_summer_fest_yukata.png" class="ac-thumb-sm" onclick="openReviewDetail('edit-2', 'edit', 'みさき', 'aoi_summer_fest_yukata', 'god')">
+                        <img src="images/aoi_thumbnails/aoi_summer_fest_yukata.png" class="ac-thumb-sm" onclick="openReviewDetail('edit-2', 'edit', 'みさき', 'aoi_summer_fest_yukata', 'approved')">
                         <div style="flex:1;">
                             <div class="flex justify-between items-start">
                                 <div>
                                     <div class="text-xs font-black">夏祭りオフショット 編集2</div>
-                                    <div class="text-xs text-sub">by <b>みさき</b></div>
+                                    <div class="text-xs text-sub mt-1">by <b>みさき</b> <span style="margin-left:6px; padding:2px 6px; background:rgba(0,0,0,0.05); border-radius:4px; font-size:10px;">画像 5件 / 21MB</span></div>
                                 </div>
-                                <select class="status-select status-god" onchange="handleStatusChange(this, 'edit-2')">
-                                    <option value="unconfirmed">未確認</option>
-                                    <option value="god" selected>神認定</option>
-                                    <option value="rejected">却下</option>
-                                </select>
+                                <div class="flex flex-col items-end gap-1">
+                                    <div class="badge badge-approved" style="font-size:10px; background: rgba(52, 199, 89, 0.1); color: #34C759;">承認</div>
+                                    <div class="text-[10px] text-sub text-right" style="font-size:10px; line-height:1.4; transform: scale(0.9); transform-origin: right;">
+                                        登録: 2026/03/21 13:05<br>承認: 2026/03/21 14:00
+                                    </div>
+                                </div>
                             </div>
-                            <div class="text-xs text-sub mt-2">2026/03/21 13:05</div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Archive List Item 3 -->
-                <div class="archive-card-sm" id="edit-3">
+                <!-- Archive List Item 1 (Oldest) -->
+                <div class="archive-card-sm" id="edit-1">
                     <div class="flex gap-3">
-                        <img src="images/aoi_thumbnails/aoi_live_rehe_sweat.png" class="ac-thumb-sm" onclick="openReviewDetail('edit-3', 'edit', 'Kuro', 'aoi_live_rehe_sweat', 'rejected')">
+                        <img src="images/aoi_thumbnails/aoi_summer_fest_yukata.png" class="ac-thumb-sm" onclick="openReviewDetail('edit-1', 'edit', 'たかひろ', 'aoi_summer_fest_yukata', 'god')">
                         <div style="flex:1;">
                             <div class="flex justify-between items-start">
                                 <div>
-                                    <div class="text-xs font-black">ライブリハーサル 編集1</div>
-                                    <div class="text-xs text-sub">by <b>Kuro</b></div>
+                                    <div class="text-xs font-black">夏祭りオフショット 編集1</div>
+                                    <div class="text-xs text-sub mt-1">by <b>たかひろ</b> <span style="margin-left:6px; padding:2px 6px; background:rgba(0,0,0,0.05); border-radius:4px; font-size:10px;">動画 2件 / 820MB</span></div>
                                 </div>
-                                <select class="status-select status-rejected" onchange="handleStatusChange(this, 'edit-3')">
-                                    <option value="unconfirmed">未確認</option>
-                                    <option value="god">神認定</option>
-                                    <option value="rejected" selected>却下</option>
-                                </select>
+                                <div class="flex flex-col items-end gap-1">
+                                    <div class="badge badge-god" style="font-size:10px; box-shadow: 0 0 8px rgba(255,107,0,0.4);">✨ 神認定</div>
+                                    <div class="text-[10px] text-sub text-right" style="font-size:10px; line-height:1.4; transform: scale(0.9); transform-origin: right;">
+                                        登録: 2026/03/21 12:45<br>承認: 2026/03/21 13:30
+                                    </div>
+                                </div>
                             </div>
-                            <div class="text-xs text-sub mt-2">2026/03/21 14:20</div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Tab 2: 非公認コンテンツ -->
+            <!-- Tab 3: 未承認 -->
             <div id="fan-original" class="tab-content">
-                <p class="text-xs text-sub mb-4">一般ファンから投稿された非公認コンテンツを審査・公式化します。</p>
+                <p class="text-xs text-sub mb-4">ファンやクリエイターから投稿された新着コンテンツを審査します。</p>
                 
                 <div class="fan-grid">
-                    <!-- Fan Item 1 -->
-                    <div class="archive-card-sm" id="fan-1">
+                    <!-- Fan Item 3 (Newest) -->
+                    <div class="archive-card-sm" id="fan-3">
                         <div class="flex gap-3">
-                            <img src="images/aoi_thumbnails/aoi_street_wave.png" class="ac-thumb-sm" onclick="openReviewDetail('fan-1', 'fan', 'あおいLOVE', 'aoi_street_wave', 'unconfirmed')">
+                            <img src="images/aoi_thumbnails/aoi_live_miracle_action.png" class="ac-thumb-sm" onclick="openReviewDetail('fan-3', 'fan', 'Sho', 'aoi_live_miracle_action', 'unconfirmed')">
                             <div style="flex:1;">
                                 <div class="flex justify-between items-start">
                                     <div>
-                                        <div class="text-xs font-black">出待ちのあおいちゃん</div>
-                                        <div class="text-xs text-sub">by <b>あおいLOVE</b></div>
+                                        <div class="text-xs font-black">ライブ中の奇跡の一枚</div>
+                                        <div class="text-xs text-sub mt-1">by <b>Sho</b> <span style="margin-left:6px; padding:2px 6px; background:rgba(0,0,0,0.05); border-radius:4px; font-size:10px;">画像 1件 / 4.2MB</span></div>
                                     </div>
-                                    <select class="status-select status-unconfirmed" onchange="handleStatusChange(this, 'fan-1')">
-                                        <option value="unconfirmed" selected>未確認</option>
-                                        <option value="approved">許可済</option>
-                                        <option value="rejected">却下</option>
-                                    </select>
+                                    <div class="text-[10px] text-sub text-right">2026/03/21 17:05</div>
                                 </div>
-                                <div class="text-xs text-sub mt-2">2026/03/21 15:30</div>
-                                <div class="official-btn-container" id="official-fan-1">
-                                    <button class="btn-official" onclick="postToSharedArchive('fan-1')">公式にする</button>
+                                
+                                <div class="flex gap-2 justify-end mt-3 border-t pt-3" style="border-color: rgba(0,0,0,0.05);">
+                                    <button class="btn" style="flex:1; padding: 6px; font-size: 11px; background: #E5E7EB; color: #4B5563; border-radius: 8px;" onclick="processApproval(this, 'fan-3', 'reject')">却下</button>
+                                    <button class="btn" style="flex:1; padding: 6px; font-size: 11px; background: rgba(52, 199, 89, 0.1); color: #34C759; border-radius: 8px;" onclick="processApproval(this, 'fan-3', 'approve')">承認</button>
+                                    <button class="btn" style="flex:1; padding: 6px; font-size: 11px; background: linear-gradient(135deg, #FF6B00, #FF9500); color: #FFF; border-radius: 8px; box-shadow: 0 4px 12px rgba(255,107,0,0.2);" onclick="processApproval(this, 'fan-3', 'god')">✨ 神認定</button>
                                 </div>
                             </div>
                         </div>
@@ -161,46 +209,42 @@
                     <!-- Fan Item 2 -->
                     <div class="archive-card-sm" id="fan-2">
                         <div class="flex gap-3">
-                            <img src="images/aoi_thumbnails/aoi_cafe_latte_smile.png" class="ac-thumb-sm" onclick="openReviewDetail('fan-2', 'fan', 'Kenji', 'aoi_cafe_latte_smile', 'approved')">
+                            <img src="images/aoi_thumbnails/aoi_cafe_latte_smile.png" class="ac-thumb-sm" onclick="openReviewDetail('fan-2', 'fan', 'Kenji', 'aoi_cafe_latte_smile', 'unconfirmed')">
                             <div style="flex:1;">
                                 <div class="flex justify-between items-start">
                                     <div>
                                         <div class="text-xs font-black">カフェでの遭遇写真</div>
-                                        <div class="text-xs text-sub">by <b>Kenji</b></div>
+                                        <div class="text-xs text-sub mt-1">by <b>Kenji</b> <span style="margin-left:6px; padding:2px 6px; background:rgba(0,0,0,0.05); border-radius:4px; font-size:10px;">画像 3件 / 14MB</span></div>
                                     </div>
-                                    <select class="status-select status-approved" onchange="handleStatusChange(this, 'fan-2')">
-                                        <option value="unconfirmed">未確認</option>
-                                        <option value="approved" selected>許可済</option>
-                                        <option value="rejected">却下</option>
-                                    </select>
+                                    <div class="text-[10px] text-sub text-right">2026/03/21 16:12</div>
                                 </div>
-                                <div class="text-xs text-sub mt-2">2026/03/21 16:12</div>
-                                <div class="official-btn-container active" id="official-fan-2">
-                                    <button class="btn-official" onclick="postToSharedArchive('fan-2')">公式にする</button>
+                                
+                                <div class="flex gap-2 justify-end mt-3 border-t pt-3" style="border-color: rgba(0,0,0,0.05);">
+                                    <button class="btn" style="flex:1; padding: 6px; font-size: 11px; background: #E5E7EB; color: #4B5563; border-radius: 8px;" onclick="processApproval(this, 'fan-2', 'reject')">却下</button>
+                                    <button class="btn" style="flex:1; padding: 6px; font-size: 11px; background: rgba(52, 199, 89, 0.1); color: #34C759; border-radius: 8px;" onclick="processApproval(this, 'fan-2', 'approve')">承認</button>
+                                    <button class="btn" style="flex:1; padding: 6px; font-size: 11px; background: linear-gradient(135deg, #FF6B00, #FF9500); color: #FFF; border-radius: 8px; box-shadow: 0 4px 12px rgba(255,107,0,0.2);" onclick="processApproval(this, 'fan-2', 'god')">✨ 神認定</button>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Fan Item 3 (New) -->
-                    <div class="archive-card-sm" id="fan-3">
+                    <!-- Fan Item 1 (Oldest) -->
+                    <div class="archive-card-sm" id="fan-1">
                         <div class="flex gap-3">
-                            <img src="images/aoi_thumbnails/aoi_live_miracle_action.png" class="ac-thumb-sm" onclick="openReviewDetail('fan-3', 'fan', 'Sho', 'aoi_live_miracle_action', 'rejected')">
+                            <img src="images/aoi_thumbnails/aoi_street_wave.png" class="ac-thumb-sm" onclick="openReviewDetail('fan-1', 'fan', 'あおいLOVE', 'aoi_street_wave', 'unconfirmed')">
                             <div style="flex:1;">
                                 <div class="flex justify-between items-start">
                                     <div>
-                                        <div class="text-xs font-black">ライブ中の奇跡の一枚</div>
-                                        <div class="text-xs text-sub">by <b>Sho</b></div>
+                                        <div class="text-xs font-black">出待ちのあおいちゃん</div>
+                                        <div class="text-xs text-sub mt-1">by <b>あおいLOVE</b> <span style="margin-left:6px; padding:2px 6px; background:rgba(0,0,0,0.05); border-radius:4px; font-size:10px;">動画 1件 / 1.2GB</span></div>
                                     </div>
-                                    <select class="status-select status-rejected" onchange="handleStatusChange(this, 'fan-3')">
-                                        <option value="unconfirmed">未確認</option>
-                                        <option value="approved">許可済</option>
-                                        <option value="rejected" selected>却下</option>
-                                    </select>
+                                    <div class="text-[10px] text-sub text-right">2026/03/21 15:30</div>
                                 </div>
-                                <div class="text-xs text-sub mt-2">2026/03/21 17:05</div>
-                                <div class="official-btn-container" id="official-fan-3">
-                                    <button class="btn-official" onclick="postToSharedArchive('fan-3')">公式にする</button>
+                                
+                                <div class="flex gap-2 justify-end mt-3 border-t pt-3" style="border-color: rgba(0,0,0,0.05);">
+                                    <button class="btn" style="flex:1; padding: 6px; font-size: 11px; background: #E5E7EB; color: #4B5563; border-radius: 8px;" onclick="processApproval(this, 'fan-1', 'reject')">却下</button>
+                                    <button class="btn" style="flex:1; padding: 6px; font-size: 11px; background: rgba(52, 199, 89, 0.1); color: #34C759; border-radius: 8px;" onclick="processApproval(this, 'fan-1', 'approve')">承認</button>
+                                    <button class="btn" style="flex:1; padding: 6px; font-size: 11px; background: linear-gradient(135deg, #FF6B00, #FF9500); color: #FFF; border-radius: 8px; box-shadow: 0 4px 12px rgba(255,107,0,0.2);" onclick="processApproval(this, 'fan-1', 'god')">✨ 神認定</button>
                                 </div>
                             </div>
                         </div>
@@ -255,6 +299,114 @@
             </a>
         </nav>
     </div>
+    <script>
+        function processApproval(btn, id, action) {
+            const card = btn.closest('.archive-card-sm');
+            
+            // Disable buttons
+            const buttons = card.querySelectorAll('button');
+            buttons.forEach(b => { b.disabled = true; b.style.opacity = '0.5'; });
+            
+            // Show loading
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<span class="loading-spinner" style="width:10px;height:10px;border-width:2px;border-top-color:currentColor;"></span>';
+            btn.style.opacity = '1';
+
+            setTimeout(() => {
+                if (action === 'reject') {
+                    // Turn the flex row of buttons into a "却下済み" indicator inside Unapproved.
+                    const btnContainer = btn.parentNode;
+                    btnContainer.innerHTML = `<div class="text-[11px] font-black w-full text-center" style="color: #FF3B30; padding: 8px; background: rgba(255, 59, 48, 0.1); border-radius: 8px;">このコンテンツは却下されました</div>`;
+                    
+                    const imgNode = card.querySelector('img');
+                    imgNode.style.filter = 'grayscale(100%) opacity(60%)';
+                    card.style.background = '#FCFDFD';
+                    card.style.border = '1px dashed rgba(255,59,48,0.3)';
+                    card.style.opacity = '0.85';
+                    
+                    imgNode.setAttribute('onclick', imgNode.getAttribute('onclick').replace(/'unconfirmed'/g, `'rejected'`));
+                    return;
+                }
+
+                // Animate out
+                card.style.transition = 'all 0.3s cubic-bezier(0.1, 0.8, 0.2, 1)';
+                card.style.transform = 'scale(0.95) translateX(-20px)';
+                card.style.opacity = '0';
+                
+                setTimeout(() => {
+                    // Approved or God -> Move to 'edit-review'
+                    const imgNode = card.querySelector('img');
+                    const imgWrap = imgNode.outerHTML;
+                    // Fix badge in detail view passing
+                    const newStatusAttr = action === 'god' ? 'god' : 'approved';
+                    const newOnclick = imgNode.getAttribute('onclick').replace(/'unconfirmed'/g, `'${newStatusAttr}'`);
+                    
+                    const title = card.querySelector('.font-black').innerHTML;
+                    const authorBlock = card.querySelector('.font-black').nextElementSibling.innerHTML;
+                    
+                    const now = new Date();
+                    const m = (now.getMonth() + 1).toString().padStart(2, '0');
+                    const d = now.getDate().toString().padStart(2, '0');
+                    const h = now.getHours().toString().padStart(2, '0');
+                    const min = now.getMinutes().toString().padStart(2, '0');
+                    const timeStr = `2026/${m}/${d} ${h}:${min}`;
+                    
+                    const originalTime = card.querySelector('.items-start .text-sub').innerText.trim();
+                    
+                    let badgeHtml = '';
+                    if(action === 'god') {
+                        badgeHtml = `<div class="badge badge-god" style="font-size:10px; box-shadow: 0 0 8px rgba(255,107,0,0.4);">✨ 神認定</div>`;
+                    } else {
+                        badgeHtml = `<div class="badge badge-approved" style="font-size:10px; background: rgba(52, 199, 89, 0.1); color: #34C759;">承認</div>`;
+                    }
+
+                    const newItemHtml = `
+                        <div class="flex gap-3">
+                            ${imgWrap.replace(/onclick=".*?"/, `onclick="${newOnclick}"`)}
+                            <div style="flex:1;">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <div class="text-xs font-black">${title}</div>
+                                        <div class="text-xs text-sub mt-1">${authorBlock}</div>
+                                    </div>
+                                    <div class="flex flex-col items-end gap-1">
+                                        ${badgeHtml}
+                                        <div class="text-[10px] text-sub text-right" style="font-size:10px; line-height:1.4; transform: scale(0.9); transform-origin: right;">
+                                            登録: ${originalTime}<br>承認: ${timeStr}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    const newCard = document.createElement('div');
+                    newCard.className = 'archive-card-sm';
+                    newCard.id = id;
+                    newCard.innerHTML = newItemHtml;
+                    newCard.style.transform = 'scale(0.95) translateY(-10px)';
+                    newCard.style.opacity = '0';
+                    newCard.style.transition = 'all 0.3s cubic-bezier(0.1, 0.8, 0.2, 1)';
+                    
+                    card.remove(); // specific to Unapproved list cleanup
+                    
+                    const approvedContainer = document.getElementById('edit-review');
+                    const firstChild = approvedContainer.querySelector('.archive-card-sm');
+                    if (firstChild) {
+                        approvedContainer.insertBefore(newCard, firstChild);
+                    } else {
+                        approvedContainer.appendChild(newCard); // Wait, after <p> tag is better but OK.
+                    }
+                    
+                    // Animate in
+                    setTimeout(() => {
+                        newCard.style.transform = 'scale(1) translateY(0)';
+                        newCard.style.opacity = '1';
+                    }, 50);
+                }, 300);
+            }, 800);
+        }
+    </script>
     <script src="app.js"></script>
 </body>
 </html>
