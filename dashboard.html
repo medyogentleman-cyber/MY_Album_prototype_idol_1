@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ダッシュボード - MYアルバム アーティスト</title>
+    <title data-i18n="db_title">ダッシュボード - MYアルバム アーティスト</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="lang.js"></script>
     <style>
         .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 4px 0 16px; }
         .stat-btn { background: linear-gradient(145deg, #ffffff, #fcfcfc); border: 1px solid rgba(0,0,0,0.02); border-radius: 16px; padding: 14px 4px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.03); transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: flex; flex-direction: column; justify-content: center; }
@@ -118,9 +119,9 @@
 <body>
     <div class="app-container">
         <header class="app-header">
-            <h1 class="header-title anim-fade">ホーム</h1>
+            <h1 class="header-title anim-fade" data-i18n="db_home">ホーム</h1>
             <a href="mypage.html" class="flex items-center gap-2" style="text-decoration:none; color:inherit;">
-                <span class="text-xs font-black">蒼くみ</span>
+                <span class="text-xs font-black" data-i18n="db_artist_name">蒼くみ</span>
                 <img src="images/icon/aoi_icon.png" alt="Profile" class="avatar" style="width:36px; height:36px; border-radius:50%; object-fit: cover;">
             </a>
         </header>
@@ -128,20 +129,20 @@
         <main class="p-4 anim-fade" style="padding-bottom: 110px;">
             <section class="mb-6">
                 <div class="stats-row">
-                    <div class="stat-btn"><span class="stat-v">48</span><span class="stat-l">キュレータ数</span></div>
-                    <div class="stat-btn"><span class="stat-v">345</span><span class="stat-l">アーカイブ数</span></div>
-                    <div class="stat-btn"><span class="stat-v">520</span><span class="stat-l">投稿数</span></div>
-                    <div class="stat-btn"><span class="stat-v">84</span><span class="stat-l">神認定数</span></div>
-                    <div class="stat-btn"><span class="stat-v heart">1,280</span><span class="stat-l">いいね</span></div>
-                    <div class="stat-btn highlight" onclick="openTippingModal()" style="cursor:pointer;"><span class="stat-v money">¥125,400</span><span class="stat-l">投げ銭</span></div>
+                    <div class="stat-btn"><span class="stat-v">48</span><span class="stat-l" data-i18n="stat_curators">キュレータ数</span></div>
+                    <div class="stat-btn"><span class="stat-v">345</span><span class="stat-l" data-i18n="stat_archives">アーカイブ数</span></div>
+                    <div class="stat-btn"><span class="stat-v">520</span><span class="stat-l" data-i18n="stat_posts">投稿数</span></div>
+                    <div class="stat-btn"><span class="stat-v">84</span><span class="stat-l" data-i18n="stat_god_certs">神認定数</span></div>
+                    <div class="stat-btn"><span class="stat-v heart">1,280</span><span class="stat-l" data-i18n="stat_likes">いいね</span></div>
+                    <div class="stat-btn highlight" onclick="openTippingModal()" style="cursor:pointer;"><span class="stat-v money">¥125,400</span><span class="stat-l" data-i18n="stat_tipping">投げ銭</span></div>
                 </div>
-                <p style="text-align: right; font-size: 10px; color: var(--text-sub); margin-top: -8px; margin-right: 4px;">※上記の数値は総合計で記載されています</p>
+                <p style="text-align: right; font-size: 10px; color: var(--text-sub); margin-top: -8px; margin-right: 4px;" data-i18n="stat_note">※上記の数値は総合計で記載されています</p>
             </section>
 
             <!-- New Fan Section (Vertical - Premium) -->
             <section class="mb-6">
                 <div class="flex justify-between items-center mb-4">
-                    <h2 style="font-size:18px; font-weight:950;">最近追加のあなたファン</h2>
+                    <h2 style="font-size:18px; font-weight:950;" data-i18n="db_recent_fans">最近追加のあなたファン</h2>
                 </div>
                 <div class="fan-row">
                     <!-- Fan 1 -->
@@ -194,44 +195,44 @@
 
             <section class="card mb-6">
                 <div class="flex justify-between items-center mb-4">
-                    <h3>SNS連携ステータス</h3>
-                    <a href="mypage.html" class="text-sub text-xs">管理</a>
+                    <h3 data-i18n="db_sns_status">SNS連携ステータス</h3>
+                    <a href="mypage.html" class="text-sub text-xs" data-i18n="db_sns_manage">管理</a>
                 </div>
                 <div class="sns-grid">
                     <div class="sns-item">
                         <div class="sns-main">
                             <div class="sns-icon is-img"><img src="images/icon/X.png" alt="X"></div>
-                            <div><div class="text-xs font-black">X (Twitter)</div><div class="text-xs text-sub">同期中</div></div>
+                            <div><div class="text-xs font-black">X (Twitter)</div><div class="text-xs text-sub" data-i18n="sns_syncing">同期中</div></div>
                         </div>
-                        <div class="badge badge-god" style="font-size:8px;">連携済</div>
+                        <div class="badge badge-god" style="font-size:8px;" data-i18n="sns_linked">連携済</div>
                     </div>
                     <div class="sns-item">
                         <div class="sns-main">
                             <div class="sns-icon is-img"><img src="images/icon/Instagram.png" alt="Instagram"></div>
-                            <div><div class="text-xs font-black">Instagram</div><div class="text-xs text-sub">同期中</div></div>
+                            <div><div class="text-xs font-black">Instagram</div><div class="text-xs text-sub" data-i18n="sns_syncing">同期中</div></div>
                         </div>
-                        <div class="badge badge-god" style="font-size:8px;">連携済</div>
+                        <div class="badge badge-god" style="font-size:8px;" data-i18n="sns_linked">連携済</div>
                     </div>
                     <div class="sns-item">
                         <div class="sns-main">
                             <div class="sns-icon is-img"><img src="images/icon/Youtube.png" alt="YouTube"></div>
-                            <div><div class="text-xs font-black">YouTube</div><div class="text-xs text-sub">未連携</div></div>
+                            <div><div class="text-xs font-black">YouTube</div><div class="text-xs text-sub" data-i18n="sns_unlinked">未連携</div></div>
                         </div>
-                        <div class="badge badge-unconfirmed" style="font-size:8px;">未連携</div>
+                        <div class="badge badge-unconfirmed" style="font-size:8px;" data-i18n="sns_unlinked">未連携</div>
                     </div>
                     <div class="sns-item">
                         <div class="sns-main">
                             <div class="sns-icon is-img"><img src="images/icon/Tictok.png" alt="TikTok"></div>
-                            <div><div class="text-xs font-black">TikTok</div><div class="text-xs text-sub">同期中</div></div>
+                            <div><div class="text-xs font-black">TikTok</div><div class="text-xs text-sub" data-i18n="sns_syncing">同期中</div></div>
                         </div>
-                        <div class="badge badge-god" style="font-size:8px;">連携済</div>
+                        <div class="badge badge-god" style="font-size:8px;" data-i18n="sns_linked">連携済</div>
                     </div>
                     <div class="sns-item">
                         <div class="sns-main">
                             <div class="sns-icon is-img"><img src="images/icon/showroom.png" alt="SHOWROOM"></div>
-                            <div><div class="text-xs font-black">SHOWROOM</div><div class="text-xs text-sub">未連携</div></div>
+                            <div><div class="text-xs font-black">SHOWROOM</div><div class="text-xs text-sub" data-i18n="sns_unlinked">未連携</div></div>
                         </div>
-                        <div class="badge badge-unconfirmed" style="font-size:8px;">未連携</div>
+                        <div class="badge badge-unconfirmed" style="font-size:8px;" data-i18n="sns_unlinked">未連携</div>
                     </div>
                 </div>
             </section>
@@ -239,18 +240,18 @@
             <!-- MY Storage Contract Status -->
             <section class="card mb-6" style="padding: 16px; background:#fff; border-radius:20px; box-shadow:0 4px 15px rgba(0,0,0,0.02); border: 1px solid rgba(0,0,0,0.03);">
                 <div class="flex justify-between items-center mb-2">
-                    <h3 style="font-size:16px; font-weight:950;">MYストレージ契約状況</h3>
-                    <div style="background:var(--primary-color); color:white; font-size:10px; font-weight:900; padding:4px 10px; border-radius:8px;">契約中</div>
+                    <h3 style="font-size:16px; font-weight:950;" data-i18n="db_storage_status">MYストレージ契約状況</h3>
+                    <div style="background:var(--primary-color); color:white; font-size:10px; font-weight:900; padding:4px 10px; border-radius:8px;" data-i18n="storage_active">契約中</div>
                 </div>
-                <div style="font-size: 14px; font-weight: 900; margin-bottom: 8px;">プラン: スタンダード</div>
-                <div style="font-size: 11px; color: var(--text-sub); font-weight: 700; margin-bottom: 16px; line-height: 1.5;">PC版 MYストレージ と連携して、高品質な大容量アーカイブをセキュアに受け取れます。</div>
+                <div style="font-size: 14px; font-weight: 900; margin-bottom: 8px;" data-i18n="storage_plan">プラン: スタンダード</div>
+                <div style="font-size: 11px; color: var(--text-sub); font-weight: 700; margin-bottom: 16px; line-height: 1.5;" data-i18n="storage_desc">PC版 MYストレージ と連携して、高品質な大容量アーカイブをセキュアに受け取れます。</div>
 
                 <div style="background: #E8EFF2; border-radius: 16px; padding: 24px;">
-                    <div style="font-size: 15px; font-weight: 900; margin-bottom: 16px; color: #515C61;">伝送量の利用状況</div>
+                    <div style="font-size: 15px; font-weight: 900; margin-bottom: 16px; color: #515C61;" data-i18n="storage_usage_title">伝送量の利用状況</div>
                     
                     <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:4px;">
-                        <span style="font-size:14px; font-weight:900; color:#515C61;">伝送合計</span>
-                        <span style="font-size:18px; font-weight:900; color:#515C61;">1 TB<span style="font-size:12px;"> /年間(12か月)</span></span>
+                        <span style="font-size:14px; font-weight:900; color:#515C61;" data-i18n="storage_total">伝送合計</span>
+                        <span style="font-size:18px; font-weight:900; color:#515C61;">1 TB<span style="font-size:12px;" data-i18n="storage_per_year"> /年間(12か月)</span></span>
                     </div>
                     <div style="width: 100%; height: 8px; background: #9EA8AD; border-radius: 4px; overflow: hidden; margin-bottom: 20px;">
                         <div style="height: 100%; background: #616E73; border-radius: 4px; width: 49%;"></div>
@@ -258,15 +259,15 @@
 
                     <div style="display:flex; flex-direction:column; gap:10px;">
                         <div style="display:flex; justify-content:space-between; align-items:center;">
-                            <span style="font-size:13px; font-weight:900; color:#515C61;">残伝送量</span>
+                            <span style="font-size:13px; font-weight:900; color:#515C61;" data-i18n="storage_remain">残伝送量</span>
                             <span style="font-size:16px; font-weight:900; color:#515C61;">510.52 GB</span>
                         </div>
                         <div style="display:flex; justify-content:space-between; align-items:center;">
-                            <span style="font-size:13px; font-weight:900; color:#515C61;">預け量</span>
+                            <span style="font-size:13px; font-weight:900; color:#515C61;" data-i18n="storage_deposited">預け量</span>
                             <span style="font-size:16px; font-weight:900; color:#515C61;">1.47 GB</span>
                         </div>
                         <div style="display:flex; justify-content:space-between; align-items:center;">
-                            <span style="font-size:13px; font-weight:900; color:#515C61;">終了日</span>
+                            <span style="font-size:13px; font-weight:900; color:#515C61;" data-i18n="storage_end_date">終了日</span>
                             <span style="font-size:16px; font-weight:900; color:#515C61;">2027/03/25</span>
                         </div>
                     </div>
@@ -300,23 +301,23 @@
         <nav class="bottom-nav">
             <a href="dashboard.html" class="nav-item active">
                 <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
-                <span>ホーム</span>
+                <span data-i18n="nav_home">ホーム</span>
             </a>
             <a href="album_edit.html" class="nav-item">
                 <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-                <span>MY投稿</span>
+                <span data-i18n="nav_post">MY投稿</span>
             </a>
             <a href="review.html" class="nav-item">
                 <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                <span>レビュー</span>
+                <span data-i18n="nav_review">レビュー</span>
             </a>
             <a href="invite.html" class="nav-item">
                 <svg viewBox="0 0 24 24"><path d="M15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-9-2V7H4v3H1v2h3v3h2v-3h3v-2H6zm9 4c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-                <span>招待</span>
+                <span data-i18n="nav_invite">招待</span>
             </a>
             <a href="mypage.html" class="nav-item">
                 <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-                <span>マイページ</span>
+                <span data-i18n="nav_mypage">マイページ</span>
             </a>
         </nav>
     </div>
@@ -396,14 +397,16 @@
 
         function renderProfile(fan) {
             const content = document.getElementById('modalContent');
+            const rankCNameText = t('profile_creator_name');
+            const bioText = t('profile_bio');
             
             let archiveHTML = fan.archives && fan.archives.length > 0 ? fan.archives.map((a, i) => {
                 const isVideo = i % 2 === 0;
-                const badge = isVideo ? '<div class="type-badge video">🎥 動画</div>' : '<div class="type-badge image">📸 画像</div>';
+                const badge = isVideo ? `<div class="type-badge video">${t('type_video')}</div>` : `<div class="type-badge image">${t('type_image')}</div>`;
                 return `
                 <div class="archive-card">
                     <div class="ac-header">
-                        <div class="ac-platform"><img src="images/Myalbumlogo_small.png" style="width:14px; height:14px;"> MYアルバム限定コンテンツ</div>
+                        <div class="ac-platform"><img src="images/Myalbumlogo_small.png" style="width:14px; height:14px;"> ${t('profile_limited')}</div>
                     </div>
                     <div class="ac-main">
                         <div class="thumb-wrap">
@@ -418,17 +421,17 @@
                     <div class="ac-version-sec">
                         <div class="v-row">
                             <img src="${a.thumb}" class="v-thumb-edit" style="filter: brightness(1.1) contrast(1.1);">
-                            <div class="v-name">${isVideo ? 'ファンミーティング編集版' : 'カラーコレクション'}</div>
+                            <div class="v-name">${isVideo ? t('v_fan_meeting') : t('v_color_correction')}</div>
                             <div class="v-time">2026/03/21 12:45</div>
                         </div>
                     </div>
                 </div>`;
-            }).join('') : '<div style="text-align:center; padding: 20px; color: var(--text-sub); font-weight: 800; font-size: 13px;">まだアーカイブはありません</div>';
+            }).join('') : `<div style="text-align:center; padding: 20px; color: var(--text-sub); font-weight: 800; font-size: 13px;">${t('profile_no_archive')}</div>`;
 
             content.innerHTML = `
                 <div class="modal-header-nav">
                     <div class="modal-back-btn" onclick="closeProfile()">‹</div>
-                    <div class="modal-title">新しいファンの情報</div>
+                    <div class="modal-title">${t('profile_modal_title')}</div>
                     <div style="width: 32px;"></div>
                 </div>
                 
@@ -438,30 +441,30 @@
                             <img src="${fan.icon}" class="pd-icon">
                             <div>
                                 <div class="pd-name">${fan.name}</div>
-                                <div class="pd-date">登録日: ${fan.date}</div>
+                                <div class="pd-date">${t('profile_date_prefix')}${fan.date}</div>
                             </div>
                         </div>
                         
                         <div>
-                            <div class="pd-label">クリエイターネーム (表示名)</div>
+                            <div class="pd-label">${rankCNameText}</div>
                             <div class="pd-value">${fan.name}</div>
                         </div>
                         
                         <div>
-                            <div class="pd-label">自己紹介</div>
+                            <div class="pd-label">${bioText}</div>
                             <div class="pd-bio">${fan.bio}</div>
                         </div>
                     </div>
 
                     <button class="fp-archive-btn" id="toggleArchiveBtn" onclick="toggleFanArchives()">
-                        アーカイブ一覧を見る
+                        ${t('profile_view_archives')}
                         <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
                     </button>
 
                     <div id="fan-archives-list" class="archives-container">
                         <div style="text-align: left; font-size: 16px; font-weight: 950; margin-bottom: 16px; margin-top: 24px; display: flex; align-items: center; gap: 8px; color: var(--text-main);">
                             <span style="width: 4px; height: 16px; background: var(--primary-color); border-radius: 2px;"></span>
-                            MYアルバム アーカイブ一覧
+                            ${t('profile_archive_list')}
                         </div>
                         ${archiveHTML}
                     </div>
@@ -486,11 +489,11 @@
             if (container.classList.contains('active')) {
                 container.classList.remove('active');
                 btn.classList.remove('open');
-                btn.innerHTML = 'アーカイブ一覧を見る <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>';
+                btn.innerHTML = `${t('profile_view_archives')} <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>`;
             } else {
                 container.classList.add('active');
                 btn.classList.add('open');
-                btn.innerHTML = 'アーカイブ一覧を閉じる <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M7 14l5-5 5 5z"/></svg>';
+                btn.innerHTML = `${t('profile_close_archives')} <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M7 14l5-5 5 5z"/></svg>`;
                 
                 setTimeout(() => {
                     sheet.scrollTo({
@@ -543,7 +546,7 @@
                     <div class="rank-num">${rankLabel}</div>
                     <img src="${fan.icon}" class="rank-icon">
                     <div class="rank-info">
-                        <div class="rank-c-name">クリエイターネーム (表示名)</div>
+                        <div class="rank-c-name">${t('profile_creator_name')}</div>
                         <div class="rank-name">${fan.name}</div>
                     </div>
                     <div class="rank-amount">¥${fan.amount}</div>
@@ -551,6 +554,10 @@
                 `;
             });
             content.innerHTML = html;
+            
+            // Set Modal Title based on language
+            const titleEl = document.querySelector('#tippingModal .modal-title');
+            if (titleEl) titleEl.innerText = t('tipping_modal_title');
             
             document.getElementById('tippingModal').classList.add('active');
             document.body.style.overflow = 'hidden';

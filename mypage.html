@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>マイページ - MYアルバム アーティスト</title>
+    <title data-i18n="mp_title">マイページ - MYアルバム アーティスト</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="lang.js"></script>
     <style>
         .profile-card { background: white; padding: 24px; border-radius: 24px; text-align: center; margin-bottom: 24px; }
         .setting-section { background: white; border-radius: 20px; overflow: hidden; margin-bottom: 24px; box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
@@ -31,7 +32,7 @@
     <div class="app-container">
         <header class="app-header">
             <button class="btn-ghost" onclick="history.back()" style="font-size: 20px;">←</button>
-            <h1 class="header-title">マイページ</h1>
+            <h1 class="header-title" data-i18n="mp_title">マイページ</h1>
             <div style="width: 32px;"></div>
         </header>
 
@@ -43,32 +44,36 @@
                 </div>
                 <input type="file" id="avatar-f" style="display:none;" onchange="previewImage(this, 'my-avatar')">
                 <h2 class="mt-4">蒼くみ</h2>
-                <p class="text-xs text-sub">蒼くみ Official HUB オーナー</p>
+                <p class="text-xs text-sub" data-i18n="mp_owner">蒼くみ Official HUB オーナー</p>
             </div>
 
-            <h3 class="mb-4 ml-2">アカウント設定</h3>
+            <h3 class="mb-4 ml-2" data-i18n="mp_acct_setting">アカウント設定</h3>
             <div class="setting-section">
                 <div class="setting-item" onclick="openBasicInfo()" style="cursor:pointer;">
-                    <div class="setting-label">👤 基本情報の編集</div>
+                    <div class="setting-label" data-i18n="mp_basic_info">👤 基本情報の編集</div>
                     <span style="color:var(--text-sub);">›</span>
                 </div>
                 <div class="setting-item" onclick="openMgrInfo()" style="cursor:pointer;">
-                    <div class="setting-label">🏢 事務所・マネージャー連絡先の編集</div>
+                    <div class="setting-label" data-i18n="mp_mgr_info">🏢 事務所・マネージャー連絡先の編集</div>
                     <span style="color:var(--text-sub);">›</span>
                 </div>
-                <div class="setting-item" onclick="alert('ログイン方法の設定へ')">
-                    <div class="setting-label">🔐 ログイン情報の変更</div>
+                <div class="setting-item" onclick="alert(t('mp_js_login_msg'))" style="cursor:pointer;">
+                    <div class="setting-label" data-i18n="mp_login_info">🔐 ログイン情報の変更</div>
                     <span style="color:var(--text-sub);">›</span>
+                </div>
+                <div class="setting-item" onclick="appToggleLanguage()" style="cursor:pointer;">
+                    <div class="setting-label" data-i18n="mp_lang_setting">🌐 言語切替 / Language</div>
+                    <span id="current-lang-display" style="color:var(--text-sub); font-size:12px; font-weight:800;">日本語</span>
                 </div>
             </div>
 
-            <h3 class="mb-4 ml-2">SNS自動連携設定</h3>
+            <h3 class="mb-4 ml-2" data-i18n="mp_sns_link">SNS自動連携設定</h3>
             <div class="setting-section">
                 <div class="setting-item" style="flex-direction: column; align-items: stretch; gap: 8px;">
                     <div class="flex items-center justify-between">
                         <div class="setting-label"><div class="sns-icon is-img" style="width:24px; height:24px;"><img src="images/icon/X.png" alt="X"></div> X (Twitter)</div>
                         <div class="flex items-center gap-3">
-                            <span class="sns-status-text">連携中</span>
+                            <span class="sns-status-text" data-i18n="mp_sns_linked">連携中</span>
                             <label class="toggle-switch"><input type="checkbox" checked><span class="slider"></span></label>
                         </div>
                     </div>
@@ -80,7 +85,7 @@
                     <div class="flex items-center justify-between">
                         <div class="setting-label"><div class="sns-icon is-img" style="width:24px; height:24px;"><img src="images/icon/Instagram.png" alt="Instagram"></div> Instagram</div>
                         <div class="flex items-center gap-3">
-                            <span class="sns-status-text">連携中</span>
+                            <span class="sns-status-text" data-i18n="mp_sns_linked">連携中</span>
                             <label class="toggle-switch"><input type="checkbox" checked><span class="slider"></span></label>
                         </div>
                     </div>
@@ -92,19 +97,19 @@
                     <div class="flex items-center justify-between">
                         <div class="setting-label"><div class="sns-icon is-img" style="width:24px; height:24px;"><img src="images/icon/Youtube.png" alt="YouTube"></div> YouTube</div>
                         <div class="flex items-center gap-3">
-                            <span class="sns-status-text" style="color:var(--text-sub);">未連携</span>
-                            <button class="btn btn-outline btn-sm" style="width:auto; padding:4px 12px; font-size:10px;">連携する</button>
+                            <span class="sns-status-text" style="color:var(--text-sub);" data-i18n="mp_sns_unlinked">未連携</span>
+                            <button class="btn btn-outline btn-sm" style="width:auto; padding:4px 12px; font-size:10px;" data-i18n="mp_sns_btn_link">連携する</button>
                         </div>
                     </div>
                     <div class="text-xs" style="padding-left: 36px; padding-right: 16px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-                        <span id="url-yt" style="color:var(--text-sub); text-decoration: underline; cursor:pointer;" onclick="editSNSUrl('YouTube', 'url-yt')">URLを設定...</span>
+                        <span id="url-yt" style="color:var(--text-sub); text-decoration: underline; cursor:pointer;" onclick="editSNSUrl('YouTube', 'url-yt')" data-i18n="mp_sns_url_unset">URLを設定...</span>
                     </div>
                 </div>
                 <div class="setting-item" style="flex-direction: column; align-items: stretch; gap: 8px;">
                     <div class="flex items-center justify-between">
                         <div class="setting-label"><div class="sns-icon is-img" style="width:24px; height:24px;"><img src="images/icon/Tictok.png" alt="TikTok"></div> TikTok</div>
                         <div class="flex items-center gap-3">
-                            <span class="sns-status-text">連携中</span>
+                            <span class="sns-status-text" data-i18n="mp_sns_linked">連携中</span>
                             <label class="toggle-switch"><input type="checkbox" checked><span class="slider"></span></label>
                         </div>
                     </div>
@@ -116,17 +121,17 @@
                     <div class="flex items-center justify-between">
                         <div class="setting-label"><div class="sns-icon is-img" style="width:24px; height:24px;"><img src="images/icon/showroom.png" alt="SHOWROOM"></div> SHOWROOM</div>
                         <div class="flex items-center gap-3">
-                            <span class="sns-status-text" style="color:var(--text-sub);">未連携</span>
-                            <button class="btn btn-outline btn-sm" style="width:auto; padding:4px 12px; font-size:10px;">連携する</button>
+                            <span class="sns-status-text" style="color:var(--text-sub);" data-i18n="mp_sns_unlinked">未連携</span>
+                            <button class="btn btn-outline btn-sm" style="width:auto; padding:4px 12px; font-size:10px;" data-i18n="mp_sns_btn_link">連携する</button>
                         </div>
                     </div>
                     <div class="text-xs" style="padding-left: 36px; padding-right: 16px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-                        <span id="url-sr" style="color:var(--text-sub); text-decoration: underline; cursor:pointer;" onclick="editSNSUrl('SHOWROOM', 'url-sr')">URLを設定...</span>
+                        <span id="url-sr" style="color:var(--text-sub); text-decoration: underline; cursor:pointer;" onclick="editSNSUrl('SHOWROOM', 'url-sr')" data-i18n="mp_sns_url_unset">URLを設定...</span>
                     </div>
                 </div>
             </div>
 
-            <button class="btn btn-ghost" style="color:var(--danger); border: 1px solid rgba(255,59,48,0.1); background: white; border-radius:16px;">ログアウト</button>
+            <button class="btn btn-ghost" style="color:var(--danger); border: 1px solid rgba(255,59,48,0.1); background: white; border-radius:16px;" data-i18n="mp_logout">ログアウト</button>
         </main>
 
         <!-- Basic Info Modal -->
@@ -134,15 +139,15 @@
             <div class="modal-sheet">
                 <div class="modal-header-nav">
                     <div class="modal-back-btn" onclick="closeBasicInfo()">‹</div>
-                    <div class="modal-title">基本情報の編集</div>
+                    <div class="modal-title" data-i18n="mp_b_modal_title">基本情報の編集</div>
                     <div style="width: 32px;"></div>
                 </div>
                 
                 <div class="p-6 pb-24">
-                    <p class="text-sub mb-6 text-xs font-black">アーティスト活動に使用する基本情報を編集します。</p>
+                    <p class="text-sub mb-6 text-xs font-black" data-i18n="mp_b_modal_desc">アーティスト活動に使用する基本情報を編集します。</p>
 
                     <div class="input-group mb-4">
-                        <label class="label">氏名 <span class="required-tag">必須</span></label>
+                        <label class="label"><span data-i18n="mp_b_name">氏名</span> <span class="required-tag" data-i18n="mp_lbl_req">必須</span></label>
                         <div class="flex gap-2">
                             <div style="flex:1;">
                                 <input type="text" id="edit-name-last" class="input" value="蒼" oninput="validateEditName('edit-name-last', 'error-edit-name-last')">
@@ -153,36 +158,36 @@
                                 <div id="error-edit-name-first" class="text-xs mt-1" style="display:none; color:var(--danger); font-weight:700;"></div>
                             </div>
                         </div>
-                        <div class="text-xs text-sub mt-1">※各10文字以内</div>
+                        <div class="text-xs text-sub mt-1" data-i18n="mp_b_name_desc">※各10文字以内</div>
                     </div>
                     <div class="input-group mb-4">
-                        <label class="label">電話番号 <span class="required-tag">必須</span></label>
+                        <label class="label"><span data-i18n="mp_b_tel">電話番号</span> <span class="required-tag" data-i18n="mp_lbl_req">必須</span></label>
                         <input type="tel" id="edit-tel-input" class="input" value="09012345678" oninput="validateEditPhone()">
-                        <div class="text-xs text-sub mt-1">※ハイフンなし</div>
+                        <div class="text-xs text-sub mt-1" data-i18n="mp_b_tel_desc">※ハイフンなし</div>
                         <div id="error-edit-tel" class="text-xs mt-1" style="display:none; color:var(--danger); font-weight:700;"></div>
                     </div>
                     <div class="input-group mb-4">
-                        <label class="label">Email <span class="required-tag">必須</span></label>
+                        <label class="label"><span data-i18n="mp_b_email">Email</span> <span class="required-tag" data-i18n="mp_lbl_req">必須</span></label>
                         <input type="email" id="edit-email-input" class="input" value="akumi@officemock.com" oninput="validateEditEmail()">
                         <div id="error-edit-email" class="text-xs mt-1" style="display:none; color:var(--danger); font-weight:700;"></div>
                     </div>
                     <div class="input-group mb-4">
-                        <label class="label">郵便番号 <span class="required-tag">必須</span></label>
+                        <label class="label"><span data-i18n="mp_b_zip">郵便番号</span> <span class="required-tag" data-i18n="mp_lbl_req">必須</span></label>
                         <input type="tel" id="edit-zip-input" class="input" value="1500001" oninput="validateEditZip()" maxlength="7">
-                        <div class="text-xs text-sub mt-1">※ハイフンなし</div>
+                        <div class="text-xs text-sub mt-1" data-i18n="mp_b_zip_desc">※ハイフンなし</div>
                         <div id="error-edit-zip" class="text-xs mt-1" style="display:none; color:var(--danger); font-weight:700;"></div>
                     </div>
                     <div class="input-group mb-12">
-                        <label class="label">住所 <span class="required-tag">必須</span></label>
+                        <label class="label"><span data-i18n="mp_b_addr">住所</span> <span class="required-tag" data-i18n="mp_lbl_req">必須</span></label>
                         <input type="text" id="edit-address-input" class="input" value="東京都渋谷区神宮前1-2-3" oninput="validateEditAddress()">
-                        <div class="text-xs text-sub mt-1">※全角半角合計100文字以内</div>
+                        <div class="text-xs text-sub mt-1" data-i18n="mp_b_addr_desc">※全角半角合計100文字以内</div>
                         <div id="error-edit-address" class="text-xs mt-1" style="display:none; color:var(--danger); font-weight:700;"></div>
                     </div>
 
-                    <button class="btn btn-primary w-full" id="btn-save-basic" onclick="saveBasicInfo()">保存する</button>
+                    <button class="btn btn-primary w-full" id="btn-save-basic" onclick="saveBasicInfo()" data-i18n="mp_btn_save">保存する</button>
                     
                     <!-- Success Toast (Hidden initially) -->
-                    <div id="toast-success" style="opacity:0; visibility:hidden; transition:0.3s; position:fixed; bottom: 80px; left:50%; transform:translateX(-50%); background:rgba(0,0,0,0.85); color:white; padding:12px 24px; border-radius:24px; font-size:13px; font-weight:800; z-index:2000; box-shadow:0 8px 24px rgba(0,0,0,0.2);">
+                    <div id="toast-success" style="opacity:0; visibility:hidden; transition:0.3s; position:fixed; bottom: 80px; left:50%; transform:translateX(-50%); background:rgba(0,0,0,0.85); color:white; padding:12px 24px; border-radius:24px; font-size:13px; font-weight:800; z-index:2000; box-shadow:0 8px 24px rgba(0,0,0,0.2);" data-i18n="mp_msg_save_success">
                         ✨ 保存しました。
                     </div>
                 </div>
@@ -194,21 +199,21 @@
             <div class="modal-sheet">
                 <div class="modal-header-nav">
                     <div class="modal-back-btn" onclick="closeMgrInfo()">‹</div>
-                    <div class="modal-title">事務所・マネージャー連絡先</div>
+                    <div class="modal-title" data-i18n="mp_m_modal_title">事務所・マネージャー連絡先</div>
                     <div style="width: 32px;"></div>
                 </div>
                 
                 <div class="p-6 pb-24">
-                    <p class="text-sub mb-6 text-xs font-black">運営からのお知らせなどを送付する任意連絡先です。</p>
+                    <p class="text-sub mb-6 text-xs font-black" data-i18n="mp_m_modal_desc">運営からのお知らせなどを送付する任意連絡先です。</p>
 
                     <div class="input-group mb-4">
-                        <label class="label">事務所名 <span class="optional-tag">任意</span></label>
+                        <label class="label"><span data-i18n="mp_m_office">事務所名</span> <span class="optional-tag" data-i18n="mp_lbl_opt">任意</span></label>
                         <input type="text" id="edit-office-name" class="input" value="〇〇エンターテインメント" oninput="validateEditOfficeName()">
-                        <div class="text-xs text-sub mt-1">※全角半角50文字以内</div>
+                        <div class="text-xs text-sub mt-1" data-i18n="mp_m_office_desc">※全角半角50文字以内</div>
                         <div id="error-edit-office-name" class="text-xs mt-1" style="display:none; color:var(--danger); font-weight:700;"></div>
                     </div>
                     <div class="input-group mb-4">
-                        <label class="label">担当マネージャー名 <span class="optional-tag">任意</span></label>
+                        <label class="label"><span data-i18n="mp_m_mgr_name">担当マネージャー名</span> <span class="optional-tag" data-i18n="mp_lbl_opt">任意</span></label>
                         <div class="flex gap-2">
                             <div style="flex:1;">
                                 <input type="text" id="edit-mgr-name-last" class="input" value="佐藤" oninput="validateEditManagerName('edit-mgr-name-last', 'error-edit-mgr-name-last')">
@@ -219,24 +224,24 @@
                                 <div id="error-edit-mgr-name-first" class="text-xs mt-1" style="display:none; color:var(--danger); font-weight:700;"></div>
                             </div>
                         </div>
-                        <div class="text-xs text-sub mt-1">※各10文字以内</div>
+                        <div class="text-xs text-sub mt-1" data-i18n="mp_m_mgr_name_desc">※各10文字以内</div>
                     </div>
                     <div class="input-group mb-4">
-                        <label class="label">担当者電話番号 <span class="optional-tag">任意</span></label>
+                        <label class="label"><span data-i18n="mp_m_mgr_tel">担当者電話番号</span> <span class="optional-tag" data-i18n="mp_lbl_opt">任意</span></label>
                         <input type="tel" id="edit-mgr-tel-input" class="input" value="09098765432" oninput="validateEditMgrPhone()">
-                        <div class="text-xs text-sub mt-1">※ハイフンなし</div>
+                        <div class="text-xs text-sub mt-1" data-i18n="mp_m_mgr_tel_desc">※ハイフンなし</div>
                         <div id="error-edit-mgr-tel" class="text-xs mt-1" style="display:none; color:var(--danger); font-weight:700;"></div>
                     </div>
                     <div class="input-group mb-12">
-                        <label class="label">担当者メールアドレス <span class="optional-tag">任意</span></label>
+                        <label class="label"><span data-i18n="mp_m_mgr_email">担当者メールアドレス</span> <span class="optional-tag" data-i18n="mp_lbl_opt">任意</span></label>
                         <input type="email" id="edit-mgr-email-input" class="input" value="manager@office.com" oninput="validateEditMgrEmail()">
                         <div id="error-edit-mgr-email" class="text-xs mt-1" style="display:none; color:var(--danger); font-weight:700;"></div>
                     </div>
 
-                    <button class="btn btn-primary w-full" id="btn-save-mgr" onclick="saveMgrInfo()">保存する</button>
+                    <button class="btn btn-primary w-full" id="btn-save-mgr" onclick="saveMgrInfo()" data-i18n="mp_btn_save">保存する</button>
                     
                     <!-- Success Toast (Hidden initially) -->
-                    <div id="toast-success-mgr" style="opacity:0; visibility:hidden; transition:0.3s; position:fixed; bottom: 80px; left:50%; transform:translateX(-50%); background:rgba(0,0,0,0.85); color:white; padding:12px 24px; border-radius:24px; font-size:13px; font-weight:800; z-index:2000; box-shadow:0 8px 24px rgba(0,0,0,0.2);">
+                    <div id="toast-success-mgr" style="opacity:0; visibility:hidden; transition:0.3s; position:fixed; bottom: 80px; left:50%; transform:translateX(-50%); background:rgba(0,0,0,0.85); color:white; padding:12px 24px; border-radius:24px; font-size:13px; font-weight:800; z-index:2000; box-shadow:0 8px 24px rgba(0,0,0,0.2);" data-i18n="mp_msg_save_success">
                         ✨ 保存しました。
                     </div>
                 </div>
@@ -246,23 +251,23 @@
         <nav class="bottom-nav">
             <a href="dashboard.html" class="nav-item">
                 <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
-                <span>ホーム</span>
+                <span data-i18n="nav_home">ホーム</span>
             </a>
             <a href="album_edit.html" class="nav-item">
                 <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-                <span>MY投稿</span>
+                <span data-i18n="nav_post">MY投稿</span>
             </a>
             <a href="review.html" class="nav-item">
                 <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                <span>レビュー</span>
+                <span data-i18n="nav_review">レビュー</span>
             </a>
             <a href="invite.html" class="nav-item">
                 <svg viewBox="0 0 24 24"><path d="M15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-9-2V7H4v3H1v2h3v3h2v-3h3v-2H6zm9 4c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-                <span>招待</span>
+                <span data-i18n="nav_invite">招待</span>
             </a>
             <a href="mypage.html" class="nav-item active">
                 <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-                <span>マイページ</span>
+                <span data-i18n="nav_mypage">マイページ</span>
             </a>
         </nav>
     </div>
@@ -270,12 +275,13 @@
         function editSNSUrl(platformName, elementId) {
             const el = document.getElementById(elementId);
             const currentStr = el.innerText;
-            const initialVal = (currentStr === 'URLを設定...' || currentStr === '未設定') ? '' : currentStr;
-            const newUrl = prompt(`${platformName} のURLまたはユーザーIDを入力してください：`, initialVal);
+            const unsetStr = t('mp_sns_url_unset');
+            const initialVal = (currentStr === unsetStr || currentStr === '未設定') ? '' : currentStr;
+            const newUrl = prompt(`${platformName}${t('mp_js_sns_prompt')}`, initialVal);
 
             if (newUrl !== null) {
                 if (newUrl.trim() === '') {
-                    el.innerText = 'URLを設定...';
+                    el.innerText = unsetStr;
                     el.style.color = 'var(--text-sub)';
                 } else {
                     el.innerText = newUrl.trim();
@@ -283,6 +289,21 @@
                 }
             }
         }
+
+        function appToggleLanguage() {
+            const nextLang = currentLang === 'ja' ? 'en' : 'ja';
+            setLanguage(nextLang);
+            updateToggleUI();
+        }
+
+        function updateToggleUI() {
+            const el = document.getElementById('current-lang-display');
+            if (el) el.innerText = currentLang === 'ja' ? '日本語' : 'English';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateToggleUI();
+        });
 
         // Basic Info Form Logic
         function openBasicInfo() {
@@ -302,7 +323,7 @@
             const input = document.getElementById(id);
             const error = document.getElementById(errorId);
             if (input.value.length > 10) {
-                error.innerText = '10文字以内で入力してください。';
+                error.innerText = t('mp_js_err_10_chars');
                 error.style.display = 'block';
                 input.style.borderColor = 'var(--danger)';
             } else {
@@ -320,11 +341,11 @@
             }
             const val = input.value;
             if (val.length > 11) {
-                error.innerText = '11桁以内の数値で入力してください。';
+                error.innerText = t('mp_js_err_11_nums');
                 error.style.display = 'block';
                 input.style.borderColor = 'var(--danger)';
             } else if (val.length > 0 && !/^\d+$/.test(val)) {
-                error.innerText = '数値のみで入力してください。';
+                error.innerText = t('mp_js_err_nums_only');
                 error.style.display = 'block';
                 input.style.borderColor = 'var(--danger)';
             } else {
@@ -339,7 +360,7 @@
             const error = document.getElementById('error-edit-email');
             const val = input.value;
             if (val.length > 0 && !val.includes('@')) {
-                error.innerText = '有効なメールアドレス（@を含む）を入力してください。';
+                error.innerText = t('mp_js_err_email');
                 error.style.display = 'block';
                 input.style.borderColor = 'var(--danger)';
             } else {
@@ -358,11 +379,11 @@
             const val = input.value;
             
             if (val.length > 0 && !/^\d+$/.test(val)) {
-                error.innerText = '数値のみで入力してください。';
+                error.innerText = t('mp_js_err_nums_only');
                 error.style.display = 'block';
                 input.style.borderColor = 'var(--danger)';
             } else if (val.length > 7) {
-                error.innerText = '7桁の数値で入力してください。';
+                error.innerText = t('mp_js_err_7_nums');
                 error.style.display = 'block';
                 input.style.borderColor = 'var(--danger)';
             } else {
@@ -389,7 +410,7 @@
             const input = document.getElementById('edit-address-input');
             const error = document.getElementById('error-edit-address');
             if (input.value.length > 100) {
-                error.innerText = '100文字以内で入力してください。';
+                error.innerText = t('mp_js_err_100_chars');
                 error.style.display = 'block';
                 input.style.borderColor = 'var(--danger)';
             } else {
@@ -440,7 +461,7 @@
             const input = document.getElementById('edit-office-name');
             const error = document.getElementById('error-edit-office-name');
             if (input.value.length > 50) {
-                error.innerText = '50文字以内で入力してください。';
+                error.innerText = t('mp_js_err_50_chars');
                 error.style.display = 'block';
                 input.style.borderColor = 'var(--danger)';
             } else {
@@ -454,7 +475,7 @@
             const input = document.getElementById(id);
             const error = document.getElementById(errorId);
             if (input.value.length > 10) {
-                error.innerText = '10文字以内で入力してください。';
+                error.innerText = t('mp_js_err_10_chars');
                 error.style.display = 'block';
                 input.style.borderColor = 'var(--danger)';
             } else {
@@ -472,11 +493,11 @@
             }
             const val = input.value;
             if (val.length > 11) {
-                error.innerText = '11桁以内の数値で入力してください。';
+                error.innerText = t('mp_js_err_11_nums');
                 error.style.display = 'block';
                 input.style.borderColor = 'var(--danger)';
             } else if (val.length > 0 && !/^\d+$/.test(val)) {
-                error.innerText = '数値のみで入力してください。';
+                error.innerText = t('mp_js_err_nums_only');
                 error.style.display = 'block';
                 input.style.borderColor = 'var(--danger)';
             } else {
@@ -491,7 +512,7 @@
             const error = document.getElementById('error-edit-mgr-email');
             const val = input.value;
             if (val.length > 0 && !val.includes('@')) {
-                error.innerText = '有効なメールアドレス（@を含む）を入力してください。';
+                error.innerText = t('mp_js_err_email');
                 error.style.display = 'block';
                 input.style.borderColor = 'var(--danger)';
             } else {

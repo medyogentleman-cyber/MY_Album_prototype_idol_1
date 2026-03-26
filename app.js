@@ -163,7 +163,11 @@ function previewImage(input, targetId) {
 function copyInviteLink() {
     const link = 'https://myalbum.app/invite/aoi-kumi-123';
     navigator.clipboard.writeText(link).then(() => {
-        showToast('招待URLをコピーしました！');
+        if (typeof t === 'function') {
+            showToast(t('inv_msg_copy'));
+        } else {
+            showToast('招待URLをコピーしました！');
+        }
     });
 }
 

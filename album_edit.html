@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>MYアルバム限定アップロード - MYアルバム</title>
+    <title data-i18n="up_title_short">MYアルバム限定アップロード - MYアルバム</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="lang.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -76,7 +77,7 @@
         
         <header class="app-header up-header">
             <a href="dashboard.html" class="back-btn">‹</a>
-            <div class="app-header-title" id="pageTitle">MYアルバム限定アップロード</div>
+            <div class="app-header-title" id="pageTitle" data-i18n="up_title">MYアルバム限定アップロード</div>
             <div style="width: 32px;"></div>
         </header>
 
@@ -84,41 +85,41 @@
             <!-- Initial View -->
             <div id="view-init">
                 <div class="intro-area">
-                    <h2 class="intro-title">MYアルバム限定アップロード</h2>
+                    <h2 class="intro-title" data-i18n="up_title">MYアルバム限定アップロード</h2>
                     
                     <!-- Destination Selection -->
                     <div style="background: white; border: 1px solid var(--border-color); border-radius: 16px; padding: 20px; margin-bottom: 24px; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
                         <div style="position: relative;">
-                            <label style="display:block; font-size: 11px; font-weight: 800; color: var(--text-sub); margin-bottom: 8px; letter-spacing: 0.05em;">追加先アーカイブ <span style="color:var(--danger-color); font-weight:bold;">※必須</span></label>
+                            <label style="display:block; font-size: 11px; font-weight: 800; color: var(--text-sub); margin-bottom: 8px; letter-spacing: 0.05em;"><span data-i18n="up_dest">追加先アーカイブ</span> <span style="color:var(--danger-color); font-weight:bold;" data-i18n="up_mandatory">※必須</span></label>
                             <div style="position: relative;">
                                 <select id="archive-select" class="input-field" style="appearance: none; padding-right: 36px;" onchange="updateArchiveToggle()">
-                                    <option value="東京ライブ 神ファンサシーンまとめ(共有)" selected>東京ライブ 神ファンサシーンまとめ(共有)</option>
-                                    <option value="夏服生写真メイキング映像">夏服生写真メイキング映像</option>
-                                    <option value="NEW" style="color:var(--primary-color); font-weight:900;">＋ 新規アーカイブを作成する</option>
+                                    <option value="東京ライブ 神ファンサシーンまとめ(共有)" selected data-i18n="up_opt1">東京ライブ 神ファンサシーンまとめ(共有)</option>
+                                    <option value="夏服生写真メイキング映像" data-i18n="up_opt2">夏服生写真メイキング映像</option>
+                                    <option value="NEW" style="color:var(--primary-color); font-weight:900;" data-i18n="up_opt_new">＋ 新規アーカイブを作成する</option>
                                 </select>
                                 <div style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); pointer-events: none; color: var(--text-sub); display: flex;">
                                     <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
                                 </div>
                             </div>
                             <div id="new-archive-input-container" style="display:none; margin-top: 16px; padding-top: 12px; border-top: 1px dashed var(--border-color);">
-                                <label style="display:block; font-size: 11px; font-weight: 800; color: var(--text-sub); margin-bottom: 8px; letter-spacing: 0.05em;">新しいアーカイブ名を入力 <span style="color:var(--danger-color); font-weight:bold;">※必須</span></label>
-                                <input type="text" id="new-archive-name" class="input-field" placeholder="新しいアーカイブ名を入力">
-                                <div style="font-size: 10px; color: var(--text-sub); margin-top: 6px; font-weight: 600;">半角全角文字 20文字以内</div>
+                                <label style="display:block; font-size: 11px; font-weight: 800; color: var(--text-sub); margin-bottom: 8px; letter-spacing: 0.05em;"><span data-i18n="up_new_arch_name">新しいアーカイブ名を入力</span> <span style="color:var(--danger-color); font-weight:bold;" data-i18n="up_mandatory">※必須</span></label>
+                                <input type="text" id="new-archive-name" class="input-field" placeholder="新しいアーカイブ名を入力" data-i18n="up_new_arch_name">
+                                <div style="font-size: 10px; color: var(--text-sub); margin-top: 6px; font-weight: 600;" data-i18n="up_new_arch_limit">半角全角文字 20文字以内</div>
                             </div>
                         </div>
                     </div>
                     
                     <ul class="intro-list">
-                        <li>写真・動画を一度に20件までアップロードできます。</li>
-                        <li>アップロード中は、この画面を閉じずにお待ちください。</li>
-                        <li>安全にアップロードするため、通信が安定した場所でご利用ください。</li>
+                        <li data-i18n="up_note_1">写真・動画を一度に20件までアップロードできます。</li>
+                        <li data-i18n="up_note_2">アップロード中は、この画面を閉じずにお待ちください。</li>
+                        <li data-i18n="up_note_3">安全にアップロードするため、通信が安定した場所でご利用ください。</li>
                     </ul>
 
                     <div style="margin-top: 24px;">
                         <button class="btn-large btn-primary" onclick="handleSelectFiles()">
                             <span style="font-size: 24px; margin-bottom: 2px;">📁</span>
-                            <span>写真・動画を選ぶ</span>
-                            <span class="btn-subtext">※ 1回につき最大20件まで</span>
+                            <span data-i18n="up_btn_select">写真・動画を選ぶ</span>
+                            <span class="btn-subtext" data-i18n="up_btn_sub">※ 1回につき最大20件まで</span>
                         </button>
                     </div>
                 </div>
@@ -127,14 +128,14 @@
             <!-- Uploading / Results View -->
             <div id="view-selected" style="display:none;">
                 <div style="padding: 16px 16px 0;">
-                    <span style="font-size:11px; font-weight:800; color:var(--text-sub);">追加先アーカイブ:</span>
+                    <span style="font-size:11px; font-weight:800; color:var(--text-sub);" data-i18n="up_sel_dest">追加先アーカイブ:</span>
                     <div id="selected-archive-display" style="font-size:14px; font-weight:900; color:var(--text-main); margin-top:4px; padding: 10px 14px; background: white; border-radius: 12px; border: 1px solid var(--border-color); box-shadow: 0 2px 8px rgba(0,0,0,0.02);"></div>
                 </div>
 
                 <div class="overall-prog" id="overall-prog" style="display:block;">
                     <div class="op-header">
-                        <div class="op-title" id="op-status-text">アップロード準備完了</div>
-                        <div class="op-counts" id="op-counts">0 / 3件完了</div>
+                        <div class="op-title" id="op-status-text" data-i18n="up_prep">アップロード準備完了</div>
+                        <div class="op-counts" id="op-counts" data-i18n="up_counts">0 / 3件完了</div>
                     </div>
                     <div class="op-bar-bg">
                         <div class="op-bar-fill" id="op-bar"></div>
@@ -144,7 +145,7 @@
                 <!-- Action CTA -->
                 <div class="cta-bottom" id="cta-start" style="display:block;">
                     <div class="blur-bg">
-                        <button id="cta-btn" class="btn-large btn-primary" onclick="startUpload()" style="flex-direction: row; gap: 8px;">アップロード開始</button>
+                        <button id="cta-btn" class="btn-large btn-primary" onclick="startUpload()" style="flex-direction: row; gap: 8px;" data-i18n="up_btn_start">アップロード開始</button>
                     </div>
                 </div>
 
@@ -158,23 +159,23 @@
         <nav class="bottom-nav">
             <a href="dashboard.html" class="nav-item">
                 <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
-                <span>ホーム</span>
+                <span data-i18n="nav_home">ホーム</span>
             </a>
             <a href="album_edit.html" class="nav-item active">
                 <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-                <span>MY投稿</span>
+                <span data-i18n="nav_post">MY投稿</span>
             </a>
             <a href="review.html" class="nav-item">
                 <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                <span>レビュー</span>
+                <span data-i18n="nav_review">レビュー</span>
             </a>
             <a href="invite.html" class="nav-item">
                 <svg viewBox="0 0 24 24"><path d="M15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-9-2V7H4v3H1v2h3v3h2v-3h3v-2H6zm9 4c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-                <span>招待</span>
+                <span data-i18n="nav_invite">招待</span>
             </a>
             <a href="mypage.html" class="nav-item">
                 <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-                <span>マイページ</span>
+                <span data-i18n="nav_mypage">マイページ</span>
             </a>
         </nav>
     </div>
@@ -214,7 +215,7 @@
             const select = document.getElementById('archive-select');
             let archiveName = select.options[select.selectedIndex].text;
             if (select.value === 'NEW') {
-                archiveName = document.getElementById('new-archive-name').value || '未設定の新規アーカイブ';
+                archiveName = document.getElementById('new-archive-name').value || t('up_new_arch_unset');
             }
             document.getElementById('selected-archive-display').innerText = archiveName;
 
@@ -223,7 +224,7 @@
             
             document.getElementById('cta-start').style.display = 'block';
             const btn = document.getElementById('cta-btn');
-            btn.innerText = 'アップロード開始';
+            btn.innerText = t('up_btn_start');
             btn.className = 'btn-large btn-primary';
             btn.setAttribute('onclick', 'startUpload()');
             
@@ -236,14 +237,14 @@
             const list = document.getElementById('file-queue');
             list.innerHTML = '';
             MOCK_QUEUE.forEach((f) => {
-                let statusText = '待機中';
+                let statusText = t('up_status_wait');
                 let statusColor = 'var(--primary-color)';
                 let bgStyle = '';
                 
                 if(f.status === 'uploading') { statusText = f.progress + '%'; }
-                if(f.status === 'done') { statusText = '完了'; statusColor = '#34C759'; }
+                if(f.status === 'done') { statusText = t('up_status_done'); statusColor = '#34C759'; }
                 if(f.status === 'error') { 
-                    statusText = '通信エラー'; 
+                    statusText = t('up_status_err'); 
                     statusColor = 'var(--danger-color)'; 
                     bgStyle = 'border-color:var(--danger-color); background:#FFF0F0;';
                 }
@@ -263,7 +264,7 @@
 
         function startUpload() {
             document.getElementById('cta-start').style.display = 'none';
-            document.getElementById('op-status-text').innerText = 'アップロード中...';
+            document.getElementById('op-status-text').innerText = t('up_status_up');
             document.getElementById('op-status-text').style.color = 'var(--text-main)';
             document.getElementById('op-bar').style.backgroundColor = 'var(--primary-color)';
             
@@ -307,7 +308,7 @@
                 document.getElementById('op-bar').style.width = overallPct + '%';
                 
                 const doneCount = MOCK_QUEUE.filter(f => f.status === 'done').length;
-                document.getElementById('op-counts').innerText = `${doneCount} / ${MOCK_QUEUE.length}件完了`;
+                document.getElementById('op-counts').innerText = `${doneCount} / ${MOCK_QUEUE.length}${t('up_counts_done')}`;
 
                 renderQueue();
 
@@ -321,27 +322,27 @@
         function showErrorState() {
             renderQueue();
             const btn = document.getElementById('cta-btn');
-            btn.innerText = '通信エラーが発生しました - 再試行';
+            btn.innerText = t('up_status_err_btn');
             btn.style.background = 'var(--danger-color)';
             btn.style.boxShadow = '0 4px 16px rgba(255,59,48,0.3)';
             document.getElementById('cta-start').style.display = 'block';
             
-            document.getElementById('op-status-text').innerText = '通信が不安定です (Wi-Fi環境を推奨)';
+            document.getElementById('op-status-text').innerText = t('up_status_err_txt');
             document.getElementById('op-status-text').style.color = 'var(--danger-color)';
             document.getElementById('op-bar').style.backgroundColor = 'var(--danger-color)';
         }
 
         function showComplete() {
             document.getElementById('cta-start').style.display = 'none';
-            document.getElementById('op-status-text').innerText = 'アップロード完了！';
+            document.getElementById('op-status-text').innerText = t('up_status_success');
             document.getElementById('op-status-text').style.color = '#34C759';
             document.getElementById('op-bar').style.backgroundColor = '#34C759';
             document.getElementById('status-box').innerHTML = `
                 <div style="background:white; padding:24px; border-radius:16px; text-align:center; border:1px solid var(--border-color); box-shadow:0 4px 12px rgba(0,0,0,0.05);">
                     <div style="font-size:40px; margin-bottom:12px;">✅</div>
-                    <div style="font-weight:900; font-size:16px; margin-bottom:8px;">アップロードに成功しました</div>
-                    <p style="font-size:12px; color:var(--text-sub); margin-bottom:24px; line-height:1.5;">正常にアーカイブへ追加されました。<br>処理が完了次第、ファンに通知が送信されます。</p>
-                    <button class="btn-large btn-primary" onclick="location.href='dashboard.html'" style="padding:16px; background:#1a202c; box-shadow:none;">ダッシュボードへ戻る</button>
+                    <div style="font-weight:900; font-size:16px; margin-bottom:8px;">${t('up_success_msg1')}</div>
+                    <p style="font-size:12px; color:var(--text-sub); margin-bottom:24px; line-height:1.5;">${t('up_success_msg2')}</p>
+                    <button class="btn-large btn-primary" onclick="location.href='dashboard.html'" style="padding:16px; background:#1a202c; box-shadow:none;">${t('up_btn_back_db')}</button>
                 </div>
             `;
         }

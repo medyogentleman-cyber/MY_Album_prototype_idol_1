@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>東京ライブ 神ファンサシーンまとめ - MYアルバム</title>
+    <title data-i18n="vl_tokyo_title">東京ライブ 神ファンサシーンまとめ - MYアルバム</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="lang.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root { --nav-height: 80px; }
@@ -58,10 +59,10 @@
         </div>
 
         <div class="album-meta-card">
-            <div class="badge-arch">限定公開中</div>
-            <h1 class="am-title">東京ライブ 神ファンサシーンまとめ(共有)</h1>
+            <div class="badge-arch" data-i18n="vl_badge_arch">限定公開中</div>
+            <h1 class="am-title" data-i18n="vl_tokyo_h1">東京ライブ 神ファンサシーンまとめ(共有)</h1>
             
-            <p class="am-desc">
+            <p class="am-desc" data-i18n="vl_tokyo_desc">
                 過去の東京ライブ配信から、神がかっているファンサ対応の瞬間だけを繋ぎ合わせた究極のまとめ集です。<br>合計22ファイルの動画・画像が収録されています。
             </p>
 
@@ -69,20 +70,20 @@
             <div class="stats-dashboard">
                 <div class="stat-item">
                     <div class="stat-val" style="color: #FF3B30;">18.4K</div>
-                    <div class="stat-label">総いいね ❤️</div>
+                    <div class="stat-label" data-i18n="vl_stat_likes">総いいね ❤️</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-val" style="color: #FF9500;">¥142,500</div>
-                    <div class="stat-label">総投げ銭額 🎁</div>
+                    <div class="stat-label" data-i18n="vl_stat_tips">総投げ銭額 🎁</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-val">34,200</div>
-                    <div class="stat-label">総閲覧数 👁</div>
+                    <div class="stat-label" data-i18n="vl_stat_views">総閲覧数 👁</div>
                 </div>
             </div>
 
             <div class="list-header">
-                コンテンツ別 統計 <span>全 22 コンテンツ</span>
+                <span data-i18n="vl_list_header">コンテンツ別 統計</span> <span data-i18n="vl_tokyo_count">全 22 コンテンツ</span>
             </div>
             
             <div class="content-list" id="contentList"></div>
@@ -93,23 +94,23 @@
         <nav class="bottom-nav">
             <a href="dashboard.html" class="nav-item">
                 <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
-                <span>ホーム</span>
+                <span data-i18n="nav_home">ホーム</span>
             </a>
             <a href="album_edit.html" class="nav-item">
                 <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-                <span>MY投稿</span>
+                <span data-i18n="nav_post">MY投稿</span>
             </a>
             <a href="review.html" class="nav-item active">
                 <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                <span>レビュー</span>
+                <span data-i18n="nav_review">レビュー</span>
             </a>
             <a href="invite.html" class="nav-item">
                 <svg viewBox="0 0 24 24"><path d="M15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-9-2V7H4v3H1v2h3v3h2v-3h3v-2H6zm9 4c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-                <span>招待</span>
+                <span data-i18n="nav_invite">招待</span>
             </a>
             <a href="mypage.html" class="nav-item">
                 <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-                <span>マイページ</span>
+                <span data-i18n="nav_mypage">マイページ</span>
             </a>
         </nav>
     </div>
@@ -123,59 +124,72 @@
         ];
         
         const contentData = [
-            { img: 'view_tokyolive_list_photo/aoi_01.png', type: 'video', time: '02:15', title: '登場シーン 歓喜の瞬間' },
-            { img: 'view_tokyolive_list_photo/aoi_02.png', type: 'photo', time: '', title: 'メインビジュアル 全身ショット' },
-            { img: 'view_tokyolive_list_photo/aoi_03.png', type: 'video', time: '05:30', title: '神MC 爆笑トーク集' },
-            { img: 'view_tokyolive_list_photo/aoi_04.png', type: 'photo', time: '', title: 'バックステージ オフショット' },
-            { img: 'view_tokyolive_list_photo/aoi_05.png', type: 'video', time: '01:45', title: 'カメラ目線の神ウインク' }
+            { img: 'view_tokyolive_list_photo/aoi_01.png', type: 'video', time: '02:15', titleKey: 'vl_t_scene1' },
+            { img: 'view_tokyolive_list_photo/aoi_02.png', type: 'photo', time: '', titleKey: 'vl_t_scene2_tokyo' },
+            { img: 'view_tokyolive_list_photo/aoi_03.png', type: 'video', time: '05:30', titleKey: 'vl_t_scene3' },
+            { img: 'view_tokyolive_list_photo/aoi_04.png', type: 'photo', time: '', titleKey: 'vl_t_scene4' },
+            { img: 'view_tokyolive_list_photo/aoi_05.png', type: 'video', time: '01:45', titleKey: 'vl_t_scene5' }
         ];
 
         for (let i = 5; i < 22; i++) {
-            contentData.push({ img: 'missing.png', type: Math.random()>0.5?'video':'photo', time: '03:00', title: 'ライブハイライトシーン ' + (i+1) });
+            contentData.push({ img: 'missing.png', type: Math.random()>0.5?'video':'photo', time: '03:00', titleKey: 'vl_t_hl_tokyo', titleSuffix: ' ' + (i+1) });
         }
 
         const listContainer = document.getElementById('contentList');
         
-        for (let i = 0; i < 22; i++) {
-            const data = contentData[i];
-            const badgeIcon = data.type === 'video' ? '🎥' : '🖼';
-            const badgeText = data.type === 'video' ? data.time : '画像';
-            const randomFallback = fallbackImages[Math.floor(Math.random() * fallbackImages.length)];
+        // Wait for page load and language to be ready before rendering dynamic content
+        function renderTokyoliveList() {
+            listContainer.innerHTML = '';
+            for (let i = 0; i < 22; i++) {
+                const data = contentData[i];
+                const badgeIcon = data.type === 'video' ? '🎥' : '🖼';
+                const badgeText = data.type === 'video' ? data.time : (typeof t === 'function' ? t('vl_badge_photo') : '画像');
+                const titleStr = typeof t === 'function' ? t(data.titleKey) + (data.titleSuffix || '') : data.titleKey + (data.titleSuffix || '');
+                const randomFallback = fallbackImages[Math.floor(Math.random() * fallbackImages.length)];
             
             // Randomly generated stats for uploader's view
             const likesCount = Math.floor(Math.random() * 800 + 400); 
             const tipsAmount = Math.floor(Math.random() * 8 + 1) * 500; 
 
-            const itemHtml = \`
+            const itemHtml = `
                 <div class="li-item">
                     <div class="li-thumb-wrap">
-                        <img src="../MY Album_prototype_1/\${data.img}" onerror="this.src='\${randomFallback}'">
-                        <div class="li-badge">\${badgeIcon} \${badgeText}</div>
+                        <img src="../MY Album_prototype_1/${data.img}" onerror="this.src='${randomFallback}'">
+                        <div class="li-badge">${badgeIcon} ${badgeText}</div>
                     </div>
                     <div class="li-body">
-                        <div class="li-title">\${i + 1}. \${data.title}</div>
+                        <div class="li-title">${i + 1}. ${titleStr}</div>
                         
                         <div class="artist-stats-box">
                             <div class="as-block">
                                 <div class="as-icon" style="color:#FF3B30;">❤️</div>
                                 <div class="as-val-wrap">
-                                    <div class="as-val">\${likesCount.toLocaleString()}</div>
-                                    <div class="as-label">獲得いいね</div>
+                                    <div class="as-val">${likesCount.toLocaleString()}</div>
+                                    <div class="as-label" data-i18n="vl_as_likes">獲得いいね</div>
                                 </div>
                             </div>
                             <div style="width:1px; height:24px; background:var(--border-color);"></div>
                             <div class="as-block">
                                 <div class="as-icon" style="color:#FF9500;">🎁</div>
                                 <div class="as-val-wrap">
-                                    <div class="as-val" style="color:#FF9500;">¥\${tipsAmount.toLocaleString()}</div>
-                                    <div class="as-label">獲得投げ銭</div>
+                                    <div class="as-val" style="color:#FF9500;">¥${tipsAmount.toLocaleString()}</div>
+                                    <div class="as-label" data-i18n="vl_as_tips">獲得投げ銭</div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            \`;
+            `;
             listContainer.insertAdjacentHTML('beforeend', itemHtml);
+            }
+            if (typeof updateTranslations === 'function') updateTranslations();
+        }
+
+        // Initialize display
+        if (typeof t === 'function' && Object.keys(langDict).length > 0) {
+            renderTokyoliveList();
+        } else {
+            document.addEventListener('DOMContentLoaded', () => { setTimeout(renderTokyoliveList, 50); });
         }
     </script>
 </body>
